@@ -143,12 +143,12 @@ while (my $fields = $csv->getline( $data )) {
   #&verificaGenotipo();
   #&verificaBaseNitrogenada();
   
-  my $strMutacao1 = ",Mutacao Genotipica - Origem Materna ou Paterna";
-  my $strMutacao2 = ",Mutacao Genotipica - Origem Materna e Paterna"; 
-  my $strMutacao3 = ",Mutacao Genotipica - Origem Materna";
-  my $strMutacao4 = ",Mutacao Genotipica - Origem Paterna";
-  my $strMutacao5 = ",Sem Mutacao Genotipica";  
-  my $strMutacao6 = ",Inconclusivo";  
+  my $strMutacao1 = ",Mutacao Genotipica - Origem Materna ou Paterna,";
+  my $strMutacao2 = ",Mutacao Genotipica - Origem Materna e Paterna,"; 
+  my $strMutacao3 = ",Mutacao Genotipica - Origem Materna,";
+  my $strMutacao4 = ",Mutacao Genotipica - Origem Paterna,";
+  my $strMutacao5 = ",Sem Mutacao Genotipica,";  
+  my $strMutacao6 = ",Inconclusivo,";  
   
   
   # print ($call_code_mother);
