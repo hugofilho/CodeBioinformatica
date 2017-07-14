@@ -11,12 +11,12 @@ use Switch;
 use Class::Fields;
 
 #@utor: Hugo Leite
-#Versao: 3.2
-#Data: 12/07/2017
+#Versao: 3.3
+#Data: 14/07/2017
 #Colocando dentro do GitHub
 
 # my $filename = 'D:\hugo\doutoradoBiotecHugo\genotype_call_f15_teste.txt';
-my $filename = 'D:\tr300872\Documents\Bckp 01-08-2014 disij70-trf1\D\Particular\doutorado\dados\output.strand.base.call.CMA005.txt';
+my $filename = 'D:\tr300872\Documents\Bckp 01-08-2014 disij70-trf1\D\Particular\doutorado\dados\output.strand.base.call.CMA025.txt';
  
 my $file = $filename or die "Need to get CSV file on the command line\n";
 
@@ -55,7 +55,7 @@ my $file = $filename or die "Need to get CSV file on the command line\n";
 open(my $data, '<:encoding(utf8)', $file) or die "Could not open '$file' $!\n";
      
 # open(my $fh_log, '>>', 'D:\hugo\doutoradoBiotecHugo\output.log.txt');
-open(my $fh_log, '>>', 'D:\tr300872\Documents\Bckp 01-08-2014 disij70-trf1\D\Particular\doutorado\dados\output.genotype.code.base.CMA005.txt');
+open(my $fh_log, '>>', 'D:\tr300872\Documents\Bckp 01-08-2014 disij70-trf1\D\Particular\doutorado\dados\output.genotype.code.base.CMA025.txt');
 
  
 while (my $fields = $csv->getline( $data )) {
@@ -143,12 +143,12 @@ while (my $fields = $csv->getline( $data )) {
   #&verificaGenotipo();
   #&verificaBaseNitrogenada();
   
-  my $strMutacao1 = ",Mutacao Genotipica - Origem Materna ou Paterna,";
-  my $strMutacao2 = ",Mutacao Genotipica - Origem Materna e Paterna,"; 
-  my $strMutacao3 = ",Mutacao Genotipica - Origem Materna,";
-  my $strMutacao4 = ",Mutacao Genotipica - Origem Paterna,";
-  my $strMutacao5 = ",Sem Mutacao Genotipica,";  
-  my $strMutacao6 = ",Inconclusivo,";  
+  my $strMutacao1 = ",Mutacao Genotipica - Origem Materna ou Paterna,CMA025,";
+  my $strMutacao2 = ",Mutacao Genotipica - Origem Materna e Paterna,CMA025,"; 
+  my $strMutacao3 = ",Mutacao Genotipica - Origem Materna,CMA025,";
+  my $strMutacao4 = ",Mutacao Genotipica - Origem Paterna,CMA025,";
+  my $strMutacao5 = ",Sem Mutacao Genotipica,CMA025,";  
+  my $strMutacao6 = ",Inconclusivo,CMA025,";  
   
   
   # print ($call_code_mother);
