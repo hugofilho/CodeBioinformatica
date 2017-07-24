@@ -11,8 +11,8 @@ use Switch;
 use Class::Fields;
 
 #@utor: Hugo Leite
-#Versao: 7.2
-#Data: 12/07/2017
+#Versao: 7.3
+#Data: 21/07/2017
 #Colocando dentro do GitHub
 
 my $filename = 'D:\tr300872\Documents\Bckp 01-08-2014 disij70-trf1\D\Particular\doutorado\dados\CMA005 Genotype Call.txt';
@@ -236,7 +236,7 @@ while (my $fields = $csv->getline( $data )) {
                          elsif($call_base_offspring eq 'TT') {
                              say $fh_log $reg, $strMutacao6, $strMutacao10; 
                          } 
-                         elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall' or $call_base_offspring eq 'NoCall' ) {
+                         elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
                          }                      
                      } #if $call_base_father 'AA'
@@ -2774,19 +2774,19 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
                                      say $fh_log $reg, $strMutacao5, $strMutacao10; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao5, $strMutacao15; 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao5, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
                                      say $fh_log $reg, $strMutacao6, $strMutacao9; 
@@ -2795,7 +2795,7 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao6, $strMutacao10; 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao6, $strMutacao15; 
                                  } 
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                     say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -2839,7 +2839,7 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao5, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
                                      say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -3518,7 +3518,7 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -4586,7 +4586,7 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao5, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -5987,13 +5987,13 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao5, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao9;
+                                     say $fh_log $reg, $strMutacao5, $strMutacao10;
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao9;
+                                     say $fh_log $reg, $strMutacao5, $strMutacao10;
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
