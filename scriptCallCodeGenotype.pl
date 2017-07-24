@@ -12,7 +12,7 @@ use Class::Fields;
 
 #@utor: Hugo Leite
 #Versao: 3.3
-#Data: 14/07/2017
+#Data: 21/07/2017
 #Colocando dentro do GitHub
 
 # my $filename = 'D:\hugo\doutoradoBiotecHugo\genotype_call_f15_teste.txt';
