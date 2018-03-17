@@ -15,8 +15,8 @@ use Class::Fields;
 #Data: 21/07/2017
 #Colocando dentro do GitHub
 
-# my $filename = 'D:\hugo\doutoradoBiotecHugo\genotype_call_f15_teste.txt';
-my $filename = 'D:\tr300872\Documents\Bckp 01-08-2014 disij70-trf1\D\Particular\doutorado\dados\output.strand.base.call.CMA025.txt';
+ my $filename = 'F:\doutorado\dados\resultadosBaseCall\BaseCallF08.txt';
+#my $filename = 'D:\tr300872\Documents\Bckp 01-08-2014 disij70-trf1\D\Particular\doutorado\dados\output.strand.base.call.CMA025.txt';
  
 my $file = $filename or die "Need to get CSV file on the command line\n";
 
@@ -54,8 +54,8 @@ my $file = $filename or die "Need to get CSV file on the command line\n";
      
 open(my $data, '<:encoding(utf8)', $file) or die "Could not open '$file' $!\n";
      
-# open(my $fh_log, '>>', 'D:\hugo\doutoradoBiotecHugo\output.log.txt');
-open(my $fh_log, '>>', 'D:\tr300872\Documents\Bckp 01-08-2014 disij70-trf1\D\Particular\doutorado\dados\output.genotype.code.base.CMA025.txt');
+ open(my $fh_log, '>>', 'F:\doutorado\dados\resultadoCodeGenotype\resultadoGenotypeCallF08.txt');
+#open(my $fh_log, '>>', 'D:\tr300872\Documents\Bckp 01-08-2014 disij70-trf1\D\Particular\doutorado\dados\output.genotype.code.base.CMA025.txt');
 
  
 while (my $fields = $csv->getline( $data )) {
@@ -85,26 +85,6 @@ while (my $fields = $csv->getline( $data )) {
   $position                 = $fields->[18];
   $origem_mutacao           = $fields->[19];
   $tipo_mutacao             = $fields->[20]; 
-     
-  #$probe_set_id             = $fields->[0];
-  #$call_code_mother         = $fields->[1];
-  #$tx_confidence_mother     = $fields->[2];
-  #$vl_signal_A_mother       = $fields->[3];
-  #$vl_signal_B_mother       = $fields->[4];
-  #$call_base_mother         = $fields->[5];
-  #$call_code_offspring      = $fields->[6];
-  #$tx_confidence_offspring  = $fields->[7];
-  #$vl_signal_A_offspring    = $fields->[8];
-  #$vl_signal_B_offspring    = $fields->[9];
-  #$call_base_offspring      = $fields->[10]; 
-  #$call_code_father         = $fields->[11];
-  #$tx_confidence_father     = $fields->[12];
-  #$vl_signal_A_father       = $fields->[13];
-  #$vl_signal_B_father       = $fields->[14];
-  #$call_base_father         = $fields->[15];
-  #$dbSNP                    = $fields->[16];
-  #$position                 = $fields->[17];
-  #$chromosome_id            = $fields->[18];
   
   @fields = ($probe_set_id,$call_code_father,$tx_confidence_father,
                    $vl_signal_A_father,$vl_signal_B_father,$call_base_father,                   
@@ -115,26 +95,7 @@ while (my $fields = $csv->getline( $data )) {
                    $dbSNP,$chromosome_id,$position,$origem_mutacao, $tipo_mutacao
                );
   
-  #@fields = ($probe_set_id,$call_code_mother,$tx_confidence_mother,
-  #             $vl_signal_A_mother,$vl_signal_B_mother,$call_base_mother,
-  #             $call_code_offspring,$tx_confidence_offspring,
-  #             $vl_signal_A_offspring,$vl_signal_B_offspring,$call_base_offspring,
-  #             $call_code_father,$tx_confidence_father,
-  #             $vl_signal_A_father,$vl_signal_B_father,$call_base_father,
-  #             $dbSNP,$position,$chromosome_id,$origem_mutacao, $tipo_mutacao
-  #          );
-  
-  #@fields = ($probe_set_id,
-  #             $call_code_mother,
-  #             $call_base_mother,
-  #             $call_code_father,
-  #             $call_base_father,
-  #             $call_code_offspring,
-  #             $call_base_offspring
-  #             $tx_confidence_mother,
-  #             $tx_confidence_offspring,
-  #             $tx_confidence_father
-  #          );
+ 
 
   my $reg = '';
   $reg = join(',',@fields);
@@ -143,12 +104,11 @@ while (my $fields = $csv->getline( $data )) {
   #&verificaGenotipo();
   #&verificaBaseNitrogenada();
   
-  my $strMutacao1 = ",Mutacao Genotipica - Origem Materna ou Paterna,CMA025,";
-  my $strMutacao2 = ",Mutacao Genotipica - Origem Materna e Paterna,CMA025,"; 
-  my $strMutacao3 = ",Mutacao Genotipica - Origem Materna,CMA025,";
-  my $strMutacao4 = ",Mutacao Genotipica - Origem Paterna,CMA025,";
-  my $strMutacao5 = ",Sem Mutacao Genotipica,CMA025,";  
-  my $strMutacao6 = ",Inconclusivo,CMA025,";  
+  my $strMutacao1 = ",Mutacao Genotipica - Origem Materna ou Paterna,F08,";
+  my $strMutacao3 = ",Mutacao Genotipica - Origem Materna,F08,";
+  my $strMutacao4 = ",Mutacao Genotipica - Origem Paterna,F08,";
+  my $strMutacao5 = ",Sem Mutacao Genotipica,F08,";  
+  my $strMutacao6 = ",Inconclusivo,F08,";  
   
   
   # print ($call_code_mother);
@@ -164,14 +124,32 @@ while (my $fields = $csv->getline( $data )) {
                      if ($call_code_offspring eq 'AA') {                  
                        say $fh_log $reg, $strMutacao5;
                      }
-                     elsif ($call_code_offspring eq 'AB') {                  
-                       say $fh_log $reg, $strMutacao1;
+                     elsif ($call_code_offspring eq 'AB') { 
+                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                          say $fh_log $reg, $strMutacao3;
+                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                          say $fh_log $reg, $strMutacao4;
+                        }elsif ($tx_confidence_father =  $tx_confidence_mother) {
+                          say $fh_log $reg, $strMutacao1;
+                        }                            
                      }
                      elsif ($call_code_offspring eq 'BA') {                  
-                       say $fh_log $reg, $strMutacao1;
+                       if ($tx_confidence_father >  $tx_confidence_mother) {               
+                          say $fh_log $reg, $strMutacao3;
+                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                          say $fh_log $reg, $strMutacao4;
+                        }elsif ($tx_confidence_father =  $tx_confidence_mother) {
+                          say $fh_log $reg, $strMutacao1;
+                        } 
                      }
                      elsif ($call_code_offspring eq 'BB') {                 
-                       say $fh_log $reg, $strMutacao2;
+                       if ($tx_confidence_father >  $tx_confidence_mother) {               
+                          say $fh_log $reg, $strMutacao3;
+                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                          say $fh_log $reg, $strMutacao4;
+                        }elsif ($tx_confidence_father =  $tx_confidence_mother) {
+                          say $fh_log $reg, $strMutacao1;
+                        } 
                      }
                      elsif ($call_code_offspring eq 'NoCall') {                 
                        say $fh_log $reg, $strMutacao6;
@@ -400,13 +378,31 @@ while (my $fields = $csv->getline( $data )) {
                 } #elsif($call_code_father = BA)
                 elsif($call_code_father eq 'BB') {            
                      if ($call_code_offspring eq 'AA') {                  
-                       say $fh_log $reg, $strMutacao2;
+                       if ($tx_confidence_father >  $tx_confidence_mother) {               
+                          say $fh_log $reg, $strMutacao3;
+                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                          say $fh_log $reg, $strMutacao4;
+                        }elsif ($tx_confidence_father =  $tx_confidence_mother) {
+                          say $fh_log $reg, $strMutacao1;
+                        } 
                      }
                      elsif ($call_code_offspring eq 'AB') {                  
-                       say $fh_log $reg, $strMutacao1;
+                       if ($tx_confidence_father >  $tx_confidence_mother) {               
+                          say $fh_log $reg, $strMutacao3;
+                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                          say $fh_log $reg, $strMutacao4;
+                        }elsif ($tx_confidence_father =  $tx_confidence_mother) {
+                          say $fh_log $reg, $strMutacao1;
+                        } 
                      }
                      elsif ($call_code_offspring eq 'BA') {                  
-                       say $fh_log $reg, $strMutacao1;
+                       if ($tx_confidence_father >  $tx_confidence_mother) {               
+                          say $fh_log $reg, $strMutacao3;
+                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                          say $fh_log $reg, $strMutacao4;
+                        }elsif ($tx_confidence_father =  $tx_confidence_mother) {
+                          say $fh_log $reg, $strMutacao1;
+                        } 
                      }
                      elsif ($call_code_offspring eq 'BB') {                 
                        say $fh_log $reg, $strMutacao5;
@@ -431,30 +427,6 @@ while (my $fields = $csv->getline( $data )) {
     #    }# if $call_base
     # }# if $call_code      
  # }# if $tx_confidence
-  
- # if (defined $strMutacao1) {
- 	
- # }
- # else {print $fh_log $reg};
-  
-  
- # sub verificaBaseNitrogenada()
- # {
- #   my $strMutacao5 = ",Mutacao Base Nitrogenada - Origem Inconclusiva";
- #   my $strMutacao6 = ",Mutacao Base Nitrogenada - Origem Materna e Paterna";
- #   my $strMutacao7 = ",Mutacao Base Nitrogenada - Origem Materna";
- #   my $strMutacao8 = ",Mutacao Base Nitrogenada - Origem Paterna";
- #   my $strMutacao9 = ",Transicao - Purina/Purina";
- #   my $strMutacao10 = ",Transversao - Purina/Piridimina";	
- #   switch ($call_base_mother) {
- #     case 'AA' {if ($call_base_father eq 'AA') {          
- #                    if ($call_base_offspring ne 'AA') {   
- #                       say $fh_log $reg, $strMutacao5, $strMutacao10; 
- #                    }
- #               }
- #     }
- #   }
- # }
     
 }   #While
   
