@@ -15,7 +15,7 @@ use Class::Fields;
 #Data: 21/07/2017
 #Colocando dentro do GitHub
 
- my $filename = 'F:\doutorado\dados\resultadosBaseCall\BaseCallF04New.txt';
+ my $filename = 'F:\doutorado\dados\resultadosBaseCall\BaseCallF09-3F.txt';
 #my $filename = 'D:\tr300872\Documents\Bckp 01-08-2014 disij70-trf1\D\Particular\doutorado\dados\output.strand.base.call.CMA025.txt';
  
 my $file = $filename or die "Need to get CSV file on the command line\n";
@@ -54,7 +54,7 @@ my $file = $filename or die "Need to get CSV file on the command line\n";
      
 open(my $data, '<:encoding(utf8)', $file) or die "Could not open '$file' $!\n";
      
- open(my $fh_log, '>>', 'F:\doutorado\dados\resultadoCodeGenotype\resultadoGenotypeCallF04New.txt');
+ open(my $fh_log, '>>', 'F:\doutorado\dados\resultadoCodeGenotype\resultadoGenotypeCallF09-3F.txt');
 #open(my $fh_log, '>>', 'D:\tr300872\Documents\Bckp 01-08-2014 disij70-trf1\D\Particular\doutorado\dados\output.genotype.code.base.CMA025.txt');
 
  
@@ -104,11 +104,11 @@ while (my $fields = $csv->getline( $data )) {
   #&verificaGenotipo();
   #&verificaBaseNitrogenada();
   
-  my $strMutacao1 = ",Mutacao Genotipica - Origem Materna ou Paterna,F04New,";
-  my $strMutacao3 = ",Mutacao Genotipica - Origem Materna,F04New,";
-  my $strMutacao4 = ",Mutacao Genotipica - Origem Paterna,F04New,";
-  my $strMutacao5 = ",Sem Mutacao Genotipica,F04New,";  
-  my $strMutacao6 = ",Inconclusivo,F04New,";  
+  my $strMutacao1 = ",Mutacao Genotipica - Origem Materna ou Paterna,F09-3F,";
+  my $strMutacao3 = ",Mutacao Genotipica - Origem Materna,F09-3F,";
+  my $strMutacao4 = ",Mutacao Genotipica - Origem Paterna,F09-3F,";
+  my $strMutacao5 = ",Sem Mutacao Genotipica,F09-3F,";  
+  my $strMutacao6 = ",Inconclusivo,F09-3F,";  
   
   
   # print ($call_code_mother);
@@ -127,27 +127,27 @@ while (my $fields = $csv->getline( $data )) {
                      elsif ($call_code_offspring eq 'AB') { 
                          if ($tx_confidence_father >  $tx_confidence_mother) {               
                           say $fh_log $reg, $strMutacao3;
-                        }elsif (($tx_confidence_father <  $tx_confidence_mother) {
+                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
                           say $fh_log $reg, $strMutacao4;
-                        }elsif (($tx_confidence_father =  $tx_confidence_mother) {
+                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
                           say $fh_log $reg, $strMutacao1;
                         }                            
                      }
                      elsif ($call_code_offspring eq 'BA') {                  
                        if ($tx_confidence_father >  $tx_confidence_mother) {               
                           say $fh_log $reg, $strMutacao3;
-                        }elsif (($tx_confidence_father <  $tx_confidence_mother) {
+                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
                           say $fh_log $reg, $strMutacao4;
-                        }elsif (($tx_confidence_father =  $tx_confidence_mother) {
+                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
                           say $fh_log $reg, $strMutacao1;
                         } 
                      }
                      elsif ($call_code_offspring eq 'BB') {                 
                        if ($tx_confidence_father >  $tx_confidence_mother) {               
                           say $fh_log $reg, $strMutacao3;
-                        }elsif (($tx_confidence_father <  $tx_confidence_mother) {
+                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
                           say $fh_log $reg, $strMutacao4;
-                        }elsif (($tx_confidence_father =  $tx_confidence_mother) {
+                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
                           say $fh_log $reg, $strMutacao1;
                         } 
                      }
@@ -380,27 +380,27 @@ while (my $fields = $csv->getline( $data )) {
                      if ($call_code_offspring eq 'AA') {                  
                        if ($tx_confidence_father >  $tx_confidence_mother) {               
                           say $fh_log $reg, $strMutacao3;
-                        }elsif (($tx_confidence_father <  $tx_confidence_mother) {
+                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
                           say $fh_log $reg, $strMutacao4;
-                        }elsif (($tx_confidence_father =  $tx_confidence_mother) {
+                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
                           say $fh_log $reg, $strMutacao1;
                         } 
                      }
                      elsif ($call_code_offspring eq 'AB') {                  
                        if ($tx_confidence_father >  $tx_confidence_mother) {               
                           say $fh_log $reg, $strMutacao3;
-                        }elsif (($tx_confidence_father <  $tx_confidence_mother) {
+                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
                           say $fh_log $reg, $strMutacao4;
-                        }elsif (($tx_confidence_father =  $tx_confidence_mother) {
+                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
                           say $fh_log $reg, $strMutacao1;
                         } 
                      }
                      elsif ($call_code_offspring eq 'BA') {                  
                        if ($tx_confidence_father >  $tx_confidence_mother) {               
                           say $fh_log $reg, $strMutacao3;
-                        }elsif (($tx_confidence_father <  $tx_confidence_mother) {
+                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
                           say $fh_log $reg, $strMutacao4;
-                        }elsif (($tx_confidence_father =  $tx_confidence_mother) {
+                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
                           say $fh_log $reg, $strMutacao1;
                         } 
                      }
