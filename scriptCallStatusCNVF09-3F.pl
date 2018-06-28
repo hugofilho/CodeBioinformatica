@@ -181,38 +181,50 @@ while (my $fields = $csv->getline( $data )) {
                        say $fh_log $reg, $strForaCNV;                     
                 }  
               } 
-              #case '6' {
-              #  if(($position >= '31286291') and ($position <= '31296438'))  {            
+              case '6' {  
+                if(($position >= '29580873') and ($position <= '29585573'))  {            
+                       say $fh_log $reg, $strDentroCNV;                     
+                }elsif (($position >= '29837157') and ($position <= '29921739')){
+                       say $fh_log $reg, $strDentroCNV;                                            
+                }else{
+                       say $fh_log $reg, $strForaCNV;                     
+                }  
+              }
+              #case '7' {
+              #  if(($position >= '39399651') and ($position <= '39404742'))  {            
               #         say $fh_log $reg, $strDentroCNV;                     
               #  }else{
               #         say $fh_log $reg, $strForaCNV;                     
               #  }  
               #}
-              case '7' {
-                if(($position >= '39399651') and ($position <= '39404742'))  {            
+              case '8' { 
+                if(($position >= '39247097') and ($position <= '39384337'))  {            
                        say $fh_log $reg, $strDentroCNV;                     
+                }elsif (($position >= '113262902') and ($position <= '113266695')){
+                       say $fh_log $reg, $strDentroCNV;                                            
                 }else{
                        say $fh_log $reg, $strForaCNV;                     
-                }  
-              }
-              #case '8' {
-              #  if(($position >= '22492051') and ($position <= '22499169'))  {            
+                }
+              }  
+              #case '9' { 
+              #  if(($position >= '71740193') and ($position <= '71742977'))  {            
               #         say $fh_log $reg, $strDentroCNV;                     
               #  }else{
               #         say $fh_log $reg, $strForaCNV;                     
-              #  }
-              #}  
-              case '9' { 
-                if(($position >= '71740193') and ($position <= '71742977'))  {            
-                       say $fh_log $reg, $strDentroCNV;                     
-                }else{
-                       say $fh_log $reg, $strForaCNV;                     
-                }  
-              }
+              #  }  
+              #}
               case '10' {
-                if(($position >= '{114112007') and ($position <= '114116826'))  {            
+                if(($position >= '9993321') and ($position <= '9999708'))  {            
                        say $fh_log $reg, $strDentroCNV;                     
-                }elsif (($position >= '124358180') and ($position <= '124373173')){
+                }elsif (($position >= '24377660') and ($position <= '24379026')){
+                       say $fh_log $reg, $strDentroCNV;                                            
+                }elsif (($position >= '87894149') and ($position <= '87896024')){
+                       say $fh_log $reg, $strDentroCNV;                                            
+                }elsif (($position >= '114112007') and ($position <= '114116826')){
+                       say $fh_log $reg, $strDentroCNV;                                            
+                }elsif (($position >= '132987305') and ($position <= '132992938')){
+                       say $fh_log $reg, $strDentroCNV;                                            
+                }elsif (($position >= '89679699') and ($position <= '89680719')){
                        say $fh_log $reg, $strDentroCNV;                                            
                 }else{
                        say $fh_log $reg, $strForaCNV;                     
@@ -225,13 +237,13 @@ while (my $fields = $csv->getline( $data )) {
               #         say $fh_log $reg, $strForaCNV;                     
               #  }  
               #}
-              #case '12' {
-              #  if(($position >= '48724300') and ($position <= '48725402'))  {            
-              #         say $fh_log $reg, $strDentroCNV;                     
-              #  }else{
-              #         say $fh_log $reg, $strForaCNV;                     
-              #  }  
-              #}
+              case '12' { 
+                if(($position >= '72992904') and ($position <= '73000019'))  {            
+                       say $fh_log $reg, $strDentroCNV;                     
+                }else{
+                       say $fh_log $reg, $strForaCNV;                     
+                }  
+              }
               #case '13' {
               #  if(($position >= '20482870') and ($position <= '20485732'))  {            
               #         say $fh_log $reg, $strDentroCNV;                     
@@ -243,13 +255,13 @@ while (my $fields = $csv->getline( $data )) {
               #         say $fh_log $reg, $strForaCNV;                     
               #  }  
               #}  
-              #case '14' {
-              #  if(($position >= '25867958') and ($position <= '25882388'))  {            
-              #         say $fh_log $reg, $strDentroCNV;                     
-              #  }else{
-              #         say $fh_log $reg, $strForaCNV;                     
-              #  }  
-              #}
+              case '14' { 
+                if(($position >= '23921561') and ($position <= '23922240'))  {            
+                       say $fh_log $reg, $strDentroCNV;                     
+                }else{
+                       say $fh_log $reg, $strForaCNV;                     
+                }  
+              }
               #case '15' {
               #  if(($position >= '23286571') and ($position <= '23290819'))  {            
               #         say $fh_log $reg, $strDentroCNV;                     
@@ -259,20 +271,22 @@ while (my $fields = $csv->getline( $data )) {
               #         say $fh_log $reg, $strForaCNV;                     
               #  }  
               #}
-              #case '16' {
-              #  if(($position >= '17479996') and ($position <= '17481773'))  {            
-              #         say $fh_log $reg, $strDentroCNV;                     
-              #  }else{
-              #         say $fh_log $reg, $strForaCNV;                     
-              #  }  
-              #}
-              #case '17' {
-              #  if(($position >= '39423000') and ($position <= '39432827'))  {            
-              #         say $fh_log $reg, $strDentroCNV;                     
-              #  }else{
-              #         say $fh_log $reg, $strForaCNV;                     
-              #  }  
-              #}
+              case '16' { 
+                if(($position >= '7339577') and ($position <= '7340639'))  {            
+                       say $fh_log $reg, $strDentroCNV;                     
+                }else{
+                       say $fh_log $reg, $strForaCNV;                     
+                }  
+              }
+              case '17' { 
+                if(($position >= '2399487') and ($position <= '2402229'))  {            
+                       say $fh_log $reg, $strDentroCNV;                     
+                }elsif (($position >= '55594990') and ($position <= '55601038')){
+                       say $fh_log $reg, $strDentroCNV;                                            
+                }else{
+                       say $fh_log $reg, $strForaCNV;                     
+                }  
+              }
               #case '18' {
               #  if(($position >= '48135051') and ($position <= '48140905'))  {            
               #         say $fh_log $reg, $strDentroCNV;                     
@@ -321,8 +335,3 @@ while (my $fields = $csv->getline( $data )) {
 
 close $data;
 close $fh_log;
-
-  
-   
-  
-   
