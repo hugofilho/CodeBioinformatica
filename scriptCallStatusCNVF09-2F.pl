@@ -11,11 +11,11 @@ use Switch;
 use Class::Fields;
 
 #@utor: Hugo Leite
-#Versao: 3.3
-#Data: 21/07/2017
+#Versao: 3.4
+#Data: 30/06/2018
 #Colocando dentro do GitHub
 
-my $filename = 'D:\hugo\doutoradoBiotecHugo\genotype_call_F09-2F.txt';
+my $filename = 'F:\doutorado\dados\resultadoCodeGenotype\resultadoGenotypeCallF09-2F.txt';
 
  
 my $file = $filename or die "Need to get CSV file on the command line\n";
@@ -57,7 +57,7 @@ my $file = $filename or die "Need to get CSV file on the command line\n";
 open(my $data, '<:encoding(utf8)', $file) or die "Could not open '$file' $!\n";
      
 # open(my $fh_log, '>>', 'D:\hugo\doutoradoBiotecHugo\output.log.txt');
-open(my $fh_log, '>>', 'D:\tr300872\Documents\Bckp 01-08-2014 disij70-trf1\D\Particular\doutorado\dados\cnvfinalf08.txt');
+open(my $fh_log, '>>', 'F:\doutorado\dados\resultadosStatusCNV\statusCNVF09-2F.txt');
 
  
 while (my $fields = $csv->getline( $data )) {
