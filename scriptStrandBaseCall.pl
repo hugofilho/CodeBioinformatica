@@ -1,22 +1,17 @@
 #!/usr/bin/perl
+
 use strict;
-
 use warnings;
- 
 use Text::CSV_XS;
-
-#module Switch
 use Switch;
-
 use Class::Fields;
 
 #@utor: Hugo Leite
-#Versao: 7.3
-#Data: 21/07/2017
-#Colocando dentro do GitHub
+#Versao: 8
+#Data: 29/08/2017
+#Adaptando o código para identificar mutações em nucleotideos
 
-my $filename = 'D:\tr300872\Documents\Bckp 01-08-2014 disij70-trf1\D\Particular\doutorado\dados\CMA005 Genotype Call.txt';
-#my $filename = 'D:\hugo\doutoradoBiotecHugo\genotype_call_f15_teste.txt';
+my $filename = 'F:\doutorado\dados\Genotype Call - F09.txt';
 
 my $file = $filename or die "Need to get CSV file on the command line\n";
 
@@ -48,7 +43,7 @@ my $csv = Text::CSV_XS->new({
      
 open(my $data, '<:encoding(utf8)', $file) or die "Could not open '$file' $!\n";
      
-open(my $fh_log, '>>', 'D:\tr300872\Documents\Bckp 01-08-2014 disij70-trf1\D\Particular\doutorado\dados\output.strand.base.call.CMA005.txt');
+open(my $fh_log, '>>', 'F:\doutorado\dados\resultadosBaseCall\BaseCallF09-3F.csv');
 #open(my $fh_log, '>>', 'D:\hugo\doutoradoBiotecHugo\output.strand.base.call.teste.txt');
  
 while (my $fields = $csv->getline( $data )) {
@@ -56,26 +51,47 @@ while (my $fields = $csv->getline( $data )) {
   chomp $fields ;
   $fields =~ s/\s*#.*$//;
   
-  # Para a familia F09A.txt temos as seguintes posicoes de cabecalho: Possui 2 Filhos  
+  # Para a familia F09A.txt temos as seguintes posicoes de cabecalho: Possui 3 Filhos  
   #$probe_set_id             = $fields->[0];        
   #$call_code_mother         = $fields->[1];
   #$tx_confidence_mother     = $fields->[2];
   #$vl_signal_A_mother       = $fields->[3];
   #$vl_signal_B_mother       = $fields->[4];
   #$call_base_mother         = $fields->[5];  
-  #$call_code_offspring      = $fields->[11];
-  #$tx_confidence_offspring  = $fields->[12];
-  #$vl_signal_A_offspring    = $fields->[13];
-  #$vl_signal_B_offspring    = $fields->[14];
-  #$call_base_offspring      = $fields->[15];
-  #$call_code_father         = $fields->[16];
-  #$tx_confidence_father     = $fields->[17];
-  #$vl_signal_A_father       = $fields->[18];
-  #$vl_signal_B_father       = $fields->[19];
-  #$call_base_father         = $fields->[20];  
-  #$dbSNP                    = $fields->[21];
-  #$chromosome_id            = $fields->[22];
-  #$position                 = $fields->[23];
+  #$call_code_offspring      = $fields->[16];
+  #$tx_confidence_offspring  = $fields->[17];
+  #$vl_signal_A_offspring    = $fields->[18];
+  #$vl_signal_B_offspring    = $fields->[19];
+  #$call_base_offspring      = $fields->[20];
+  #$call_code_father         = $fields->[21];
+  #$tx_confidence_father     = $fields->[22];
+  #$vl_signal_A_father       = $fields->[23];
+  #$vl_signal_B_father       = $fields->[24];
+  #$call_base_father         = $fields->[25];  
+  #$dbSNP                    = $fields->[26];
+  #$chromosome_id            = $fields->[27];
+  #$position                 = $fields->[28];
+  
+  #Para a familia F09A.txt temos as seguintes posicoes de cabecalho: Possui 2 Filhos  
+  #$probe_set_id             = $fields->[0];        
+  #$call_code_mother         = $fields->[1];
+  #$tx_confidence_mother     = $fields->[2];
+  #$vl_signal_A_mother       = $fields->[3];
+  #$vl_signal_B_mother       = $fields->[4];
+  #$call_base_mother         = $fields->[5];  
+  #$call_code_offspring      = $fields->[6];
+  #$tx_confidence_offspring  = $fields->[7];
+  #$vl_signal_A_offspring    = $fields->[8];
+  #$vl_signal_B_offspring    = $fields->[9];
+  #$call_base_offspring      = $fields->[10];
+  #$call_code_father         = $fields->[11];
+  #$tx_confidence_father     = $fields->[12];
+  #$vl_signal_A_father       = $fields->[13];
+  #$vl_signal_B_father       = $fields->[14];
+  #$call_base_father         = $fields->[15];  
+  #$dbSNP                    = $fields->[16];
+  #$chromosome_id            = $fields->[17];
+  #$position                 = $fields->[18];
   
   #Para a familia controle CMA001.txt temos as seguintes posicoes de cabecalho
   #$probe_set_id             = $fields->[0];  
@@ -99,45 +115,48 @@ while (my $fields = $csv->getline( $data )) {
   #$position                 = $fields->[18];
   
   #Para a familia controle CMA005.txt temos as seguintes posicoes de cabecalho
-  $probe_set_id             = $fields->[0];  
-  $call_code_father         = $fields->[1];
-  $tx_confidence_father     = $fields->[2];
-  $vl_signal_A_father       = $fields->[3];
-  $vl_signal_B_father       = $fields->[4];
-  $call_base_father         = $fields->[5];
-  $call_code_offspring      = $fields->[6];
-  $tx_confidence_offspring  = $fields->[7];
-  $vl_signal_A_offspring    = $fields->[8];
-  $vl_signal_B_offspring    = $fields->[9];
-  $call_base_offspring      = $fields->[10];    
-  $call_code_mother         = $fields->[11];
-  $tx_confidence_mother     = $fields->[12];
-  $vl_signal_A_mother       = $fields->[13];
-  $vl_signal_B_mother       = $fields->[14];
-  $call_base_mother         = $fields->[15];  
-  $dbSNP                    = $fields->[16];
-  $chromosome_id            = $fields->[17];
-  $position                 = $fields->[18];  
-     
-  #$probe_set_id             = $fields->[0];
-  #$call_code_mother         = $fields->[1];
-  #$tx_confidence_mother     = $fields->[2];
-  #$vl_signal_A_mother       = $fields->[3];
-  #$vl_signal_B_mother       = $fields->[4];
-  #$call_base_mother         = $fields->[5];
+  #$probe_set_id             = $fields->[0];  
+  #$call_code_father         = $fields->[1];
+  #$tx_confidence_father     = $fields->[2];
+  #$vl_signal_A_father       = $fields->[3];
+  #$vl_signal_B_father       = $fields->[4];
+  #$call_base_father         = $fields->[5];
   #$call_code_offspring      = $fields->[6];
   #$tx_confidence_offspring  = $fields->[7];
   #$vl_signal_A_offspring    = $fields->[8];
   #$vl_signal_B_offspring    = $fields->[9];
-  #$call_base_offspring      = $fields->[10]; 
-  #$call_code_father         = $fields->[11];
-  #$tx_confidence_father     = $fields->[12];
-  #$vl_signal_A_father       = $fields->[13];
-  #$vl_signal_B_father       = $fields->[14];
-  #$call_base_father         = $fields->[15];
-  #$dbSNP                    = $fields->[16];  
-  #$chromosome_id            = $fields->[17];
-  #$position                 = $fields->[18];
+  #$call_base_offspring      = $fields->[10];    
+  #$call_code_mother         = $fields->[16];
+  #$tx_confidence_mother     = $fields->[17];
+  #$vl_signal_A_mother       = $fields->[18];
+  #$vl_signal_B_mother       = $fields->[19];
+  #$call_base_mother         = $fields->[20];  
+  #$dbSNP                    = $fields->[21];
+  #$chromosome_id            = $fields->[22];
+  #$position                 = $fields->[23];  
+  
+#Para a familia F09-2F.txt [6-10] temos as seguintes posicoes de cabecalho: Possui 2 Filhos  
+#Para a familia F09-3F.txt [11-15] temos as seguintes posicoes de cabecalho: Possui 2 Filhos 
+
+  $probe_set_id             = $fields->[0];
+  $call_code_mother         = $fields->[1];
+  $tx_confidence_mother     = $fields->[2];
+  $vl_signal_A_mother       = $fields->[3];
+  $vl_signal_B_mother       = $fields->[4];
+  $call_base_mother         = $fields->[5];
+  $call_code_offspring      = $fields->[11];
+  $tx_confidence_offspring  = $fields->[12];
+  $vl_signal_A_offspring    = $fields->[13];
+  $vl_signal_B_offspring    = $fields->[14];
+  $call_base_offspring      = $fields->[15]; 
+  $call_code_father         = $fields->[16];
+  $tx_confidence_father     = $fields->[17];
+  $vl_signal_A_father       = $fields->[18];
+  $vl_signal_B_father       = $fields->[19];
+  $call_base_father         = $fields->[20];
+  $dbSNP                    = $fields->[21];  
+  $chromosome_id            = $fields->[22];
+  $position                 = $fields->[23];
   
   @fields = ($probe_set_id,$call_code_father,$tx_confidence_father,
                    $vl_signal_A_father,$vl_signal_B_father,$call_base_father,
@@ -149,27 +168,6 @@ while (my $fields = $csv->getline( $data )) {
                );
   
   
-  #  @fields = ($probe_set_id,$call_code_mother,$tx_confidence_mother,
-  #                 $vl_signal_A_mother,$vl_signal_B_mother,$call_base_mother,
-  #                 $call_code_offspring,$tx_confidence_offspring,
-  #                 $vl_signal_A_offspring,$vl_signal_B_offspring,$call_base_offspring,
-  #                 $call_code_father,$tx_confidence_father,
-  #                 $vl_signal_A_father,$vl_signal_B_father,$call_base_father,
-  #                 $dbSNP,$position,$chromosome_id
-  #             );
-  
-  
-  #@fields = ($call_code_mother,
-  #             $call_base_mother,
-  #             $call_code_offspring,
-  #             $call_base_offspring,
-  #             $call_code_father,
-  #             $call_base_father
-  #          );
-   # my $strMutacao1 = ",Mutacao Genotipica - Origem Inconclusiva";
-   # my $strMutacao2 = ",Mutacao Genotipica - Origem Materna e Paterna";
-   # my $strMutacao3 = ",Mutacao Genotipica - Origem Materna";
-   # my $strMutacao4 = ",Mutacao Genotipica - Origem Paterna";
    my $strMutacao5 = ",Mutacao Base Nitrogenada - Origem Materna ou Paterna";
    my $strMutacao6 = ",Mutacao Base Nitrogenada - Origem Materna e Paterna";
    my $strMutacao7 = ",Mutacao Base Nitrogenada - Origem Materna";
@@ -192,49 +190,139 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12;
                          }
                          elsif ($call_base_offspring eq 'AC') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }                             
                          }
                          elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9;
+                            } 
                          }
                          elsif($call_base_offspring eq 'AT') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'TA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            } 
                          }
-                         elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                         elsif($call_base_offspring eq 'CC') {                            
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            } 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9;
+                            }
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            } 
                          } 
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -252,43 +340,91 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9;
+                            } 
                          }
                          elsif($call_base_offspring eq 'AT') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'TA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                            say $fh_log $reg, $strMutacao7, $strMutacao9;
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                            say $fh_log $reg, $strMutacao7, $strMutacao9; 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                            say $fh_log $reg, $strMutacao7, $strMutacao9; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                            say $fh_log $reg, $strMutacao7, $strMutacao10;	 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                            say $fh_log $reg, $strMutacao7, $strMutacao10;	
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao9, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao9, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao9, $strMutacao15;
+                            } 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                            } 
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -299,10 +435,22 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12;
                          }
                          elsif ($call_base_offspring eq 'AC') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }; 
                          }
                          elsif($call_base_offspring eq 'AG') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -311,13 +459,31 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'AT') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'TA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }	
                          }
                          elsif($call_base_offspring eq 'CG') {
                              say $fh_log $reg, $strMutacao7, $strMutacao9; 
@@ -326,22 +492,40 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }	 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }	 
                          }
                          elsif($call_base_offspring eq 'GG') {
                              say $fh_log $reg, $strMutacao7, $strMutacao9; 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                            say $fh_log $reg, $strMutacao7, $strMutacao10;
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                            say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }
                          }
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -352,16 +536,40 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12;
                          }
                          elsif ($call_base_offspring eq 'AC') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'AT') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -370,13 +578,31 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }	 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }	 
                          }   
                          elsif($call_base_offspring eq 'CT') {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -385,13 +611,19 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }	 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
                          }    
                          elsif($call_base_offspring eq 'TT') {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -417,10 +649,10 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'AT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'TA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'CC') {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -429,7 +661,7 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao7, $strMutacao9; 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -438,16 +670,40 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          } 
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -491,16 +747,22 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }
                          } 
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -508,7 +770,7 @@ while (my $fields = $csv->getline( $data )) {
                      }#elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' )  
                      elsif ($call_base_father eq 'CT' or $call_base_father eq 'TC' ) {
                          if ($call_base_offspring eq 'AA') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9;
+                             say $fh_log $reg, $strMutacao8, $strMutacao10;
                          }
                          elsif ($call_base_offspring eq 'AC') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -535,7 +797,7 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao7, $strMutacao9; 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -544,7 +806,13 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'TG') {
                              say $fh_log $reg, $strMutacao7, $strMutacao9; 
@@ -582,7 +850,13 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao8, $strMutacao9; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CG') {
                              say $fh_log $reg, $strMutacao7, $strMutacao9; 
@@ -591,10 +865,22 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }  
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }
                          }
                          elsif($call_base_offspring eq 'GG') {
                              say $fh_log $reg, $strMutacao7, $strMutacao9; 
@@ -635,7 +921,13 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CG') {
                              say $fh_log $reg, $strMutacao7, $strMutacao9; 
@@ -647,10 +939,10 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                            say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                            say $fh_log $reg, $strMutacao7, $strMutacao9; 
                          }
                          elsif($call_base_offspring eq 'TG') {
                              say $fh_log $reg, $strMutacao7, $strMutacao9; 
@@ -670,16 +962,16 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao8, $strMutacao10;
                          }
                          elsif ($call_base_offspring eq 'AC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'AT') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -688,28 +980,46 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                            }
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                            } 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'TG') {
                              say $fh_log $reg, $strMutacao7, $strMutacao9; 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
                          }    
                          elsif($call_base_offspring eq 'TT') {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -784,16 +1094,40 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }  
                          }
                          elsif($call_base_offspring eq 'AT') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'TA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            }  
                          }
                          elsif($call_base_offspring eq 'CC') {
                              say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -811,16 +1145,40 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }  
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            }  
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }  
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          }    
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -838,43 +1196,115 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }  
                          }
                          elsif($call_base_offspring eq 'AT') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            }
                          }
                          elsif($call_base_offspring eq 'TA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            }
                          }
                          elsif($call_base_offspring eq 'CC') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }; 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }  
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }  
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }  
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }  
                          }
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -885,7 +1315,7 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12;
                          }
                          elsif ($call_base_offspring eq 'AC') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CA') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -897,19 +1327,31 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'AT') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'TA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CC') {
                              say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
                              say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -927,7 +1369,13 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -944,10 +1392,22 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }
                          }
                          elsif($call_base_offspring eq 'AT') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -965,16 +1425,22 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -1024,16 +1490,40 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+                            } 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+                            } 
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+                            } 
                          } 
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -1041,7 +1531,7 @@ while (my $fields = $csv->getline( $data )) {
                      }#elsif ($call_base_father eq 'CC')
                      elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' ) {
                          if ($call_base_offspring eq 'AA') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9;
+                             say $fh_log $reg, $strMutacao8, $strMutacao9;
                          }
                          elsif ($call_base_offspring eq 'AC') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -1062,31 +1552,55 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+                            } 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+                            }; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+                            }
                          }
                          elsif($call_base_offspring eq 'TG') {
                              say $fh_log $reg, $strMutacao7, $strMutacao9; 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+                            } 
                          } 
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -1094,7 +1608,7 @@ while (my $fields = $csv->getline( $data )) {
                      }#elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' )  
                      elsif ($call_base_father eq 'CT' or $call_base_father eq 'TC' ) {
                          if ($call_base_offspring eq 'AA') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9;
+                             say $fh_log $reg, $strMutacao8, $strMutacao9;
                          }
                          elsif ($call_base_offspring eq 'AC') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -1103,10 +1617,10 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
                          }
                          elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
                          }
                          elsif($call_base_offspring eq 'AT') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -1118,19 +1632,25 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GC') {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao15;
+                            }  
                          }
                          elsif($call_base_offspring eq 'TG') {
                              say $fh_log $reg, $strMutacao7, $strMutacao9; 
@@ -1162,25 +1682,25 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'AT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'TA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GG') {
                              say $fh_log $reg, $strMutacao7, $strMutacao9; 
@@ -1192,7 +1712,13 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao15;
+                            }  
                          }
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -1200,7 +1726,7 @@ while (my $fields = $csv->getline( $data )) {
                      }#elsif ($call_base_father eq 'GG')   
                      elsif ($call_base_father eq 'GT' or $call_base_father eq 'TG' ) {
                          if ($call_base_offspring eq 'AA') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9;
+                             say $fh_log $reg, $strMutacao8, $strMutacao9;
                          }
                          elsif ($call_base_offspring eq 'AC') {
                              say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -1221,22 +1747,22 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
                          }
                          elsif($call_base_offspring eq 'TG') {
                              say $fh_log $reg, $strMutacao7, $strMutacao9; 
@@ -1259,7 +1785,7 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao8, $strMutacao9; 
                          }
                          elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'AG') {
                              say $fh_log $reg, $strMutacao8, $strMutacao9; 
@@ -1274,22 +1800,28 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao15;
+                            }  
                          }
                          elsif($call_base_offspring eq 'TG') {
                              say $fh_log $reg, $strMutacao7, $strMutacao9; 
@@ -1364,10 +1896,22 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12;
                          }
                          elsif ($call_base_offspring eq 'AC') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }  
                          }
                          elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9;
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'AG') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -1376,37 +1920,73 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'AT') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }  
                          }
                          elsif($call_base_offspring eq 'TA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }  
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }  
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GC') {
                              say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao8,  $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            } 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }  
                          }
                          elsif($call_base_offspring eq 'GG') {
                              say $fh_log $reg, $strMutacao8, $strMutacao9; 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }  
                          }  
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -1424,19 +2004,31 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12;  
                          }
                          elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'AT') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            }  
                          }
                          elsif($call_base_offspring eq 'TA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            }  
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9;  
+                             say $fh_log $reg, $strMutacao7, $strMutacao10;  
                          }
                          elsif($call_base_offspring eq 'CG') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -1451,16 +2043,22 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            }  
                          }
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -1471,10 +2069,22 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12;
                          }
                          elsif ($call_base_offspring eq 'AC') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }  
                          }
                          elsif($call_base_offspring eq 'AG') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -1483,37 +2093,97 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'AT') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }  
                          }
                          elsif($call_base_offspring eq 'TA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }  
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }  
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }  
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            } 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }  
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }  
                          }
                          elsif($call_base_offspring eq 'GG') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            } 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }  
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            }  
                          }
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -1525,16 +2195,28 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12;
                          }
                          elsif ($call_base_offspring eq 'AC') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'AT') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -1543,28 +2225,34 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao15; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }    
                          elsif($call_base_offspring eq 'TT') {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -1574,6 +2262,137 @@ while (my $fields = $csv->getline( $data )) {
                          }
                      }#elsif ($call_base_father eq 'AT' or 'TA')
                      elsif ($call_base_father eq 'CC') {
+                         if ($call_base_offspring eq 'AA') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao10;
+                         }
+                         elsif ($call_base_offspring eq 'AC') {
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                         }
+                         elsif($call_base_offspring eq 'CA') {
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                         }
+                         elsif($call_base_offspring eq 'AG') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                         }
+                         elsif($call_base_offspring eq 'GA') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                         }
+                         elsif($call_base_offspring eq 'AT') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao15; 
+                         }
+                         elsif($call_base_offspring eq 'TA') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao15; 
+                         }
+                         elsif($call_base_offspring eq 'CC') {
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                         }
+                         elsif($call_base_offspring eq 'CG') {
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                         }
+                         elsif($call_base_offspring eq 'GC') {
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                         }   
+                         elsif($call_base_offspring eq 'CT') {
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                         }    
+                         elsif($call_base_offspring eq 'TC') {
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                         }
+                         elsif($call_base_offspring eq 'GG') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                         }
+                         elsif($call_base_offspring eq 'TG') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao15; 
+                         }                      
+                         elsif($call_base_offspring eq 'GT') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao15; 
+                         }    
+                         elsif($call_base_offspring eq 'TT') {
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            }
+                         } 
+                         elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
+                             say $fh_log $reg, $strMutacao13, $strMutacao14; 
+                         }
+                     }#elsif ($call_base_father eq 'CC')
+                     
+                     elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' ) {
+                         if ($call_base_offspring eq 'AA') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao9;
+                         }
+                         elsif ($call_base_offspring eq 'AC') {
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                         }
+                         elsif($call_base_offspring eq 'CA') {
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                         }
+                         elsif($call_base_offspring eq 'AG') {
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                         }
+                         elsif($call_base_offspring eq 'GA') {
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                         }
+                         elsif($call_base_offspring eq 'AT') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15; 
+                         }
+                         elsif($call_base_offspring eq 'TA') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15; 
+                         }
+                         elsif($call_base_offspring eq 'CC') {
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                         }
+                         elsif($call_base_offspring eq 'CG') {
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                         }
+                         elsif($call_base_offspring eq 'GC') {
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                         }   
+                         elsif($call_base_offspring eq 'CT') {
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                         }    
+                         elsif($call_base_offspring eq 'TC') {
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                         }
+                         elsif($call_base_offspring eq 'GG') {
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                         }
+                         elsif($call_base_offspring eq 'TG') {
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao15;
+                            } 
+                         }                      
+                         elsif($call_base_offspring eq 'GT') {
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao15;
+                            } 
+                         }    
+                         elsif($call_base_offspring eq 'TT') {
+                              if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                            } 
+                         } 
+                         elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
+                             say $fh_log $reg, $strMutacao13, $strMutacao14; 
+                         }
+                     }#elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' )  
+                     elsif ($call_base_father eq 'CT' or $call_base_father eq 'TC' ) {
                          if ($call_base_offspring eq 'AA') {
                              say $fh_log $reg, $strMutacao8, $strMutacao9;
                          }
@@ -1590,13 +2409,13 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'AT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'TA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
                          }
                          elsif($call_base_offspring eq 'CG') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -1614,117 +2433,10 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao8, $strMutacao9; 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
-                         }    
-                         elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
-                         } 
-                         elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
-                             say $fh_log $reg, $strMutacao13, $strMutacao14; 
-                         }
-                     }#elsif ($call_base_father eq 'CC')
-                     
-                     elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' ) {
-                         if ($call_base_offspring eq 'AA') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9;
-                         }
-                         elsif ($call_base_offspring eq 'AC') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
-                         }
-                         elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
-                         }
-                         elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
-                         }
-                         elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
-                         }
-                         elsif($call_base_offspring eq 'AT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
-                         }
-                         elsif($call_base_offspring eq 'TA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
-                         }
-                         elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
-                         }
-                         elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
-                         }
-                         elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
-                         }   
-                         elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
-                         }    
-                         elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
-                         }
-                         elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
-                         }
-                         elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
-                         }                      
-                         elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
-                         }    
-                         elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
-                         } 
-                         elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
-                             say $fh_log $reg, $strMutacao13, $strMutacao14; 
-                         }
-                     }#elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' )  
-                     elsif ($call_base_father eq 'CT' or $call_base_father eq 'TC' ) {
-                         if ($call_base_offspring eq 'AA') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9;
-                         }
-                         elsif ($call_base_offspring eq 'AC') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
-                         }
-                         elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
-                         }
-                         elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
-                         }
-                         elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
-                         }
-                         elsif($call_base_offspring eq 'AT') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
-                         }
-                         elsif($call_base_offspring eq 'TA') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
-                         }
-                         elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
-                         }
-                         elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
-                         }
-                         elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
-                         }   
-                         elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
-                         }    
-                         elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
-                         }
-                         elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
-                         }
-                         elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
-                         }                      
-                         elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
                          }    
                          elsif($call_base_offspring eq 'TT') {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -1756,31 +2468,79 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao8, $strMutacao9; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GG') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -1788,7 +2548,7 @@ while (my $fields = $csv->getline( $data )) {
                      }#elsif ($call_base_father eq 'GG')   
                      elsif ($call_base_father eq 'GT' or $call_base_father eq 'TG' ) {
                          if ($call_base_offspring eq 'AA') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9;
+                             say $fh_log $reg, $strMutacao8, $strMutacao9;
                          }
                          elsif ($call_base_offspring eq 'AC') {
                              say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -1809,13 +2569,31 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }
                          }   
                          elsif($call_base_offspring eq 'CT') {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -1827,10 +2605,10 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }    
                          elsif($call_base_offspring eq 'TT') {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -1862,22 +2640,28 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
                          }
                          elsif($call_base_offspring eq 'TG') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -1952,16 +2736,40 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12;
                          }
                          elsif ($call_base_offspring eq 'AC') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9;
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                            }
                          }
                          elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }
                          }
                          elsif($call_base_offspring eq 'AT') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -1970,13 +2778,31 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao15;
+                            } 
                          }   
                          elsif($call_base_offspring eq 'CT') {
                              say $fh_log $reg, $strMutacao8,  $strMutacao10; 
@@ -1985,13 +2811,19 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                          }    
                          elsif($call_base_offspring eq 'TT') {
                              say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -2012,10 +2844,22 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12;  
                          }
                          elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'AT') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2024,13 +2868,13 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9;  
+                             say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;  
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2039,16 +2883,22 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -2059,10 +2909,22 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12;
                          }
                          elsif ($call_base_offspring eq 'AC') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'AG') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2077,13 +2939,19 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
                              say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -2092,16 +2960,16 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -2113,16 +2981,40 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12;
                          }
                          elsif ($call_base_offspring eq 'AC') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            }
                          }
                          elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'AT') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2131,28 +3023,76 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                            }
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                            } 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            } 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9;
+                            } 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9;
+                            } 
                          }    
                          elsif($call_base_offspring eq 'TT') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2163,6 +3103,66 @@ while (my $fields = $csv->getline( $data )) {
                      }#elsif ($call_base_father eq 'AT' or 'TA')
                      elsif ($call_base_father eq 'CC') {
                          if ($call_base_offspring eq 'AA') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao10;
+                         }
+                         elsif ($call_base_offspring eq 'AC') {
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                         }
+                         elsif($call_base_offspring eq 'CA') {
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                         }
+                         elsif($call_base_offspring eq 'AG') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                         }
+                         elsif($call_base_offspring eq 'GA') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                         }
+                         elsif($call_base_offspring eq 'AT') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao15; 
+                         }
+                         elsif($call_base_offspring eq 'TA') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao15; 
+                         }
+                         elsif($call_base_offspring eq 'CC') {
+                             say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
+                         }
+                         elsif($call_base_offspring eq 'CG') {
+                             say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10; 
+                         }
+                         elsif($call_base_offspring eq 'GC') {
+                             say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10; 
+                         }   
+                         elsif($call_base_offspring eq 'CT') {
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                         }    
+                         elsif($call_base_offspring eq 'TC') {
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                         }
+                         elsif($call_base_offspring eq 'GG') {
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
+                         }
+                         elsif($call_base_offspring eq 'TG') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                         }                      
+                         elsif($call_base_offspring eq 'GT') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                         }    
+                         elsif($call_base_offspring eq 'TT') {
+                             say $fh_log $reg, $strMutacao8, $strMutacao15; 
+                         } 
+                         elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
+                             say $fh_log $reg, $strMutacao13, $strMutacao14; 
+                         }
+                     }#elsif ($call_base_father eq 'CC')
+                     
+                     elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' ) {
+                         if ($call_base_offspring eq 'AA') {
                              say $fh_log $reg, $strMutacao8, $strMutacao9;
                          }
                          elsif ($call_base_offspring eq 'AC') {
@@ -2172,79 +3172,25 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
-                         }
-                         elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
-                         }
-                         elsif($call_base_offspring eq 'AT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
-                         }
-                         elsif($call_base_offspring eq 'TA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
-                         }
-                         elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
-                         }
-                         elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
-                         }
-                         elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
-                         }   
-                         elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
-                         }    
-                         elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
-                         }
-                         elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
-                         }
-                         elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
-                         }                      
-                         elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
-                         }    
-                         elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
-                         } 
-                         elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
-                             say $fh_log $reg, $strMutacao13, $strMutacao14; 
-                         }
-                     }#elsif ($call_base_father eq 'CC')
-                     
-                     elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' ) {
-                         if ($call_base_offspring eq 'AA') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9;
-                         }
-                         elsif ($call_base_offspring eq 'AC') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
-                         }
-                         elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
-                         }
-                         elsif($call_base_offspring eq 'AG') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'GA') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'AT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'TA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao15; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2253,7 +3199,7 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'TG') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2262,7 +3208,7 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }    
                          elsif($call_base_offspring eq 'TT') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                          } 
                          elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                              say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -2270,13 +3216,13 @@ while (my $fields = $csv->getline( $data )) {
                      }#elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' )  
                      elsif ($call_base_father eq 'CT' or $call_base_father eq 'TC' ) {
                          if ($call_base_offspring eq 'AA') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9;
+                             say $fh_log $reg, $strMutacao8, $strMutacao10;
                          }
                          elsif ($call_base_offspring eq 'AC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'AG') {
                              say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -2291,28 +3237,46 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }    
                          elsif($call_base_offspring eq 'TT') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2326,40 +3290,46 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao8, $strMutacao9;
                          }
                          elsif ($call_base_offspring eq 'AC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'AT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'TA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            }
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'TG') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2376,13 +3346,13 @@ while (my $fields = $csv->getline( $data )) {
                      }#elsif ($call_base_father eq 'GG')   
                      elsif ($call_base_father eq 'GT' or $call_base_father eq 'TG' ) {
                          if ($call_base_offspring eq 'AA') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9;
+                             say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao15;
                          }
                          elsif ($call_base_offspring eq 'AC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'AG') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2397,7 +3367,13 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            }
                          }
                          elsif($call_base_offspring eq 'CG') {
                              say $fh_log $reg, $strMutacao7, $strMutacao9; 
@@ -2406,19 +3382,31 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao7, $strMutacao10; 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            }
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            }
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                             say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }    
                          elsif($call_base_offspring eq 'TT') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2432,16 +3420,16 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao8, $strMutacao10;
                          }
                          elsif ($call_base_offspring eq 'AC') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'CA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao15; 
                          }
                          elsif($call_base_offspring eq 'AG') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'GA') {
-                             say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                             say $fh_log $reg, $strMutacao8, $strMutacao10; 
                          }
                          elsif($call_base_offspring eq 'AT') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2450,28 +3438,76 @@ while (my $fields = $csv->getline( $data )) {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
                          }
                          elsif($call_base_offspring eq 'CC') {
-                             say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'CG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GC') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }   
                          elsif($call_base_offspring eq 'CT') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                            } 
                          }    
                          elsif($call_base_offspring eq 'TC') {
-                             say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                            if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                            } 
                          }
                          elsif($call_base_offspring eq 'GG') {
-                             say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }
                          elsif($call_base_offspring eq 'TG') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }                      
                          elsif($call_base_offspring eq 'GT') {
-                             say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                             if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                            }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                            } 
                          }    
                          elsif($call_base_offspring eq 'TT') {
                              say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2546,43 +3582,67 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
                                      say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                                    } 
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                                    }
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                    }
                                  }            
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                     say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -2615,28 +3675,76 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                    } 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+                                    } 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                    }
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10, $strMutacao9; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                    } 
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                    } 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                    }
                                  }
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                     say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -2644,7 +3752,7 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'AC' or 'CA')
                              elsif ($call_base_father eq 'AG' or $call_base_father eq 'GA' ) {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10;
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2659,19 +3767,19 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao7, $strMutacao9; 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
                                      say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
                                      say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -2680,16 +3788,22 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                     say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -2697,7 +3811,7 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'AG' or 'GA')
                              elsif ($call_base_father eq 'AT' or $call_base_father eq 'TA' ) {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                     say $fh_log $reg, $strMutacao7, $strMutacao15;
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
                                      say $fh_log $reg, $strMutacao7, $strMutacao9; 
@@ -2712,10 +3826,10 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
                                      say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -2724,7 +3838,7 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2733,7 +3847,13 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
                                      say $fh_log $reg, $strMutacao7, $strMutacao9; 
@@ -2750,52 +3870,142 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'AT' or 'TA')
                              elsif ($call_base_father eq 'CC') {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    }
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    }
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao15; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao15;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao15;
+                                    } 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao15; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao15;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao15;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    }; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                    } 
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                    } 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao15; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao15;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao15;
+                                    } 
                                  } 
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                     say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -2803,25 +4013,55 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'CC')
                              elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' ) {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                    }
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                                    }
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2833,22 +4073,40 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                    } 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
                                      say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                    } 
                                  } 
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                     say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -2856,19 +4114,49 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' )  
                              elsif ($call_base_father eq 'CT' or $call_base_father eq 'TC' ) {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    }
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    }
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    }
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    }
                                  }
                                  elsif($call_base_offspring eq 'AT') {
                                      say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -2880,10 +4168,22 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao15;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao15;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                    } 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2892,13 +4192,19 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
                                      say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -2909,7 +4215,13 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'CT' or $call_base_father eq 'TC' )
                              elsif ($call_base_father eq 'GG') {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                    }
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
                                      say $fh_log $reg, $strMutacao8, $strMutacao9; 
@@ -2918,16 +4230,28 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
                                      say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -2939,22 +4263,28 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao8, $strMutacao15; 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao8, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                     say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -2962,19 +4292,25 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'GG')   
                              elsif ($call_base_father eq 'GT' or $call_base_father eq 'TG' ) {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                    }
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
                                      say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -2983,7 +4319,13 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao15;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                    }
                                  }
                                  elsif($call_base_offspring eq 'CG') {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -2998,16 +4340,16 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  } 
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                     say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -3015,7 +4357,13 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'GT' or $call_base_father eq 'TG' ) 
                              elsif ($call_base_father eq 'TT') {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    }
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
                                      say $fh_log $reg, $strMutacao8, $strMutacao9; 
@@ -3024,10 +4372,22 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    }
                                  }
                                  elsif($call_base_offspring eq 'AT') {
                                      say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -3039,10 +4399,10 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao8, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -3051,7 +4411,13 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
                                      say $fh_log $reg, $strMutacao7, $strMutacao9; 
@@ -3060,7 +4426,7 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                     say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -3123,7 +4489,7 @@ while (my $fields = $csv->getline( $data )) {
                  
                  case ['CG','GC'] {if ($call_base_father eq 'AA') {          
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                         say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -3138,19 +4504,19 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
                                          say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
                                          say $fh_log $reg, $strMutacao8,  $strMutacao10; 
@@ -3162,13 +4528,19 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                                        }  
                                      }   
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -3177,7 +4549,7 @@ while (my $fields = $csv->getline( $data )) {
                                  
                                  elsif ($call_base_father eq 'AC' or $call_base_father eq 'CA' ) {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12;
+                                         say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -3189,40 +4561,58 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao9; 
-                                     }
-                                     elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao10; 
-                                     }
-                                     elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao10; 
-                                     }
-                                     elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;  
-                                     }
-                                     elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
-                                     }
-                                     elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
-                                     }   
-                                     elsif($call_base_offspring eq 'CT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
-                                     }    
-                                     elsif($call_base_offspring eq 'TC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
-                                     }
-                                     elsif($call_base_offspring eq 'GG') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
+                                     elsif($call_base_offspring eq 'AT') {
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
+                                     }
+                                     elsif($call_base_offspring eq 'TA') {
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
+                                     }
+                                     elsif($call_base_offspring eq 'CC') {
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12;  
+                                     }
+                                     elsif($call_base_offspring eq 'CG') {
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                     }
+                                     elsif($call_base_offspring eq 'GC') {
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                     }   
+                                     elsif($call_base_offspring eq 'CT') {
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao15;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                        } 
+                                     }    
+                                     elsif($call_base_offspring eq 'TC') {
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao15;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                        } 
+                                     }
+                                     elsif($call_base_offspring eq 'GG') {
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
+                                     }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15;
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15;
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -3230,7 +4620,7 @@ while (my $fields = $csv->getline( $data )) {
                                  }#elsif ($call_base_father eq 'AC' or 'CA')
                                  elsif ($call_base_father eq 'AG' or $call_base_father eq 'GA' ) {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                         say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -3245,10 +4635,10 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
                                          say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -3257,7 +4647,7 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao12, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
                                          say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -3269,13 +4659,31 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                                        } 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                                        } 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -3284,34 +4692,34 @@ while (my $fields = $csv->getline( $data )) {
                                  
                                  elsif ($call_base_father eq 'AT' or $call_base_father eq 'TA' ) {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -3320,7 +4728,7 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -3329,7 +4737,7 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -3337,52 +4745,88 @@ while (my $fields = $csv->getline( $data )) {
                                  }#elsif ($call_base_father eq 'AT' or 'TA')
                                  elsif ($call_base_father eq 'CC') {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        }
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        }  
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12;  
                                      }
                                      elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        } 
                                      }    
                                      elsif($call_base_offspring eq 'TC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao15; 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao15;
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                        }
                                      } 
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -3391,25 +4835,67 @@ while (my $fields = $csv->getline( $data )) {
                                  
                                  elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' ) {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        }
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -3421,22 +4907,52 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12;
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                        } 
                                      }    
                                      elsif($call_base_offspring eq 'TC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                        } 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                        } 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                        }
                                      } 
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -3444,13 +4960,31 @@ while (my $fields = $csv->getline( $data )) {
                                  }#elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' )  
                                  elsif ($call_base_father eq 'CT' or $call_base_father eq 'TC' ) {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        }
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
                                          say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -3459,19 +4993,19 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -3480,7 +5014,7 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12;
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12;
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10;
                                      }
                                      elsif($call_base_offspring eq 'TG') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -3489,7 +5023,7 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                      } 
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -3497,7 +5031,13 @@ while (my $fields = $csv->getline( $data )) {
                                  }#elsif ($call_base_father eq 'CT' or $call_base_father eq 'TC' )
                                  elsif ($call_base_father eq 'GG') {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        }
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
                                          say $fh_log $reg, $strMutacao8, $strMutacao9; 
@@ -3506,16 +5046,40 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        }  
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                                        }
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+                                        }
                                      }
                                      elsif($call_base_offspring eq 'CC') {
                                          say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -3527,22 +5091,40 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12;
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }    
                                      elsif($call_base_offspring eq 'TC') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao15;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao15;
+                                        } 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao15;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao15;
+                                        } 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -3550,28 +5132,46 @@ while (my $fields = $csv->getline( $data )) {
                                  }#elsif ($call_base_father eq 'GG')   
                                  elsif ($call_base_father eq 'GT' or $call_base_father eq 'TG' ) {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        }
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        }
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10
                                      }
                                      elsif($call_base_offspring eq 'CG') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12;
@@ -3595,7 +5195,7 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10 
                                      } 
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -3603,34 +5203,40 @@ while (my $fields = $csv->getline( $data )) {
                                  }#elsif ($call_base_father eq 'GT' or $call_base_father eq 'TG' ) 
                                  elsif ($call_base_father eq 'TT') {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        }
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12;
@@ -3639,7 +5245,7 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -3648,7 +5254,7 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -3711,7 +5317,7 @@ while (my $fields = $csv->getline( $data )) {
                  
                  case ['CT','TC'] {if ($call_base_father eq 'AA') {          
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10;
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -3720,16 +5326,16 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12;
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
                                          say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -3738,7 +5344,7 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
                                          say $fh_log $reg, $strMutacao8,  $strMutacao10; 
@@ -3747,16 +5353,22 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }  
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -3765,7 +5377,7 @@ while (my $fields = $csv->getline( $data )) {
                                  
                                  elsif ($call_base_father eq 'AC' or $call_base_father eq 'CA' ) {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12;
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10;
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -3774,43 +5386,61 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12;  
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao10; 
-                                     }
-                                     elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao10; 
-                                     }
-                                     elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;  
-                                     }
-                                     elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
-                                     }
-                                     elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
-                                     }   
-                                     elsif($call_base_offspring eq 'CT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
-                                     }    
-                                     elsif($call_base_offspring eq 'TC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
-                                     }
-                                     elsif($call_base_offspring eq 'GG') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
+                                     elsif($call_base_offspring eq 'TA') {
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                     }
+                                     elsif($call_base_offspring eq 'CC') {
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12;  
+                                     }
+                                     elsif($call_base_offspring eq 'CG') {
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
+                                     }
+                                     elsif($call_base_offspring eq 'GC') {
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
+                                     }   
+                                     elsif($call_base_offspring eq 'CT') {
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                     }    
+                                     elsif($call_base_offspring eq 'TC') {
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                     }
+                                     elsif($call_base_offspring eq 'GG') {
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        } 
+                                     }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -3818,7 +5448,7 @@ while (my $fields = $csv->getline( $data )) {
                                  }#elsif ($call_base_father eq 'AC' or 'CA')
                                  elsif ($call_base_father eq 'AG' or $call_base_father eq 'GA' ) {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10;
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -3827,16 +5457,16 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
                                          say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -3845,7 +5475,7 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao12, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
                                          say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -3854,16 +5484,16 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -3875,31 +5505,43 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao7, $strMutacao10;
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        }
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        }
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15; 
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -3908,16 +5550,34 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        } 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        } 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -3925,34 +5585,76 @@ while (my $fields = $csv->getline( $data )) {
                                  }#elsif ($call_base_father eq 'AT' or 'TA')
                                  elsif ($call_base_father eq 'CC') {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        }
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5,$strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7,$strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -3961,7 +5663,13 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
                                          say $fh_log $reg, $strMutacao8, $strMutacao9; 
@@ -3979,25 +5687,43 @@ while (my $fields = $csv->getline( $data )) {
                                  
                                  elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' ) {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7,$strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        }
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        }
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -4009,22 +5735,22 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12;
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }    
                                      elsif($call_base_offspring eq 'TC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
-                                     }
-                                     elsif($call_base_offspring eq 'GG') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
+                                     elsif($call_base_offspring eq 'GG') {
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                      } 
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -4032,34 +5758,88 @@ while (my $fields = $csv->getline( $data )) {
                                  }#elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' )  
                                  elsif ($call_base_father eq 'CT' or $call_base_father eq 'TC' ) {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        }
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        }
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        }
                                      }
                                      elsif($call_base_offspring eq 'CC') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        }
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -4068,13 +5848,31 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12;
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12;
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        }
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        }
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -4085,19 +5883,25 @@ while (my $fields = $csv->getline( $data )) {
                                  }#elsif ($call_base_father eq 'CT' or $call_base_father eq 'TC' )
                                  elsif ($call_base_father eq 'GG') {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        }
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
                                          say $fh_log $reg, $strMutacao8, $strMutacao9; 
@@ -4106,7 +5910,7 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -4115,22 +5919,22 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12;
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao10; 
-                                     }    
-                                     elsif($call_base_offspring eq 'TC') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao10; 
-                                     }
-                                     elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
-                                     }
-                                     elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
-                                     }                      
-                                     elsif($call_base_offspring eq 'GT') {
                                          say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }    
-                                     elsif($call_base_offspring eq 'TT') {
+                                     elsif($call_base_offspring eq 'TC') {
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                     }
+                                     elsif($call_base_offspring eq 'GG') {
                                          say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     }
+                                     elsif($call_base_offspring eq 'TG') {
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                     }                      
+                                     elsif($call_base_offspring eq 'GT') {
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                     }    
+                                     elsif($call_base_offspring eq 'TT') {
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -4138,34 +5942,40 @@ while (my $fields = $csv->getline( $data )) {
                                  }#elsif ($call_base_father eq 'GG')   
                                  elsif ($call_base_father eq 'GT' or $call_base_father eq 'TG' ) {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+                                        }
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12;
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12;
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12;
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -4174,16 +5984,16 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12;
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg,$strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12;
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12;
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      } 
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -4191,34 +6001,64 @@ while (my $fields = $csv->getline( $data )) {
                                  }#elsif ($call_base_father eq 'GT' or $call_base_father eq 'TG' ) 
                                  elsif ($call_base_father eq 'TT') {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                         if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5,  $strMutacao10;
+                                        }
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        }
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        }
                                      }
                                      elsif($call_base_offspring eq 'CC') {
                                          say $fh_log $reg, $strMutacao8, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12;
@@ -4227,13 +6067,31 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                            say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                        }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                            say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                        } 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -4320,19 +6178,37 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    }
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
                                      say $fh_log $reg, $strMutacao8, $strMutacao9; 
@@ -4344,7 +6220,13 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    } 
                                  }    
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                      say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -4353,13 +6235,13 @@ while (my $fields = $csv->getline( $data )) {
                      
                              elsif ($call_base_father eq 'AC' or $call_base_father eq 'CA' ) {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                     say $fh_log $reg, $strMutacao7, $strMutacao9;
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -4383,13 +6265,13 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
                                      say $fh_log $reg, $strMutacao8, $strMutacao10; 
@@ -4398,7 +6280,13 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    }elsif ($tx_confidence_father <  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao8, $strMutacao15;
+                                    }elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+                                        say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+                                    } 
                                  }
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                      say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -4427,31 +6315,79 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									} 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									} 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									} 
                                  }
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                      say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -4480,31 +6416,37 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao9; 
                                  }
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                      say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -4512,52 +6454,76 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'AT' or 'TA')
                              elsif ($call_base_father eq 'CC') {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									}
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									} 
                                  } 
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                      say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -4565,25 +6531,55 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'CC')
                              elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' ) {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									}
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
                                      say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -4595,22 +6591,40 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12;
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12;
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									} 
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									} 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+									} 
                                  } 
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                      say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -4618,49 +6632,55 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' )  
                              elsif ($call_base_father eq 'CT' or $call_base_father eq 'TC' ) {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									}
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao9;
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao9;
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
                                      say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -4671,52 +6691,142 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'CT' or $call_base_father eq 'TC' )
                              elsif ($call_base_father eq 'GG') {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9;
+									} 
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                     if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									}
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9;
+									}
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9;
+									}
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									}
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									}
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									} 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									}
                                  }
                                  elsif($call_base_offspring eq 'GG') {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									} 
                                  }
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                      say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -4724,40 +6834,88 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'GG')   
                              elsif ($call_base_father eq 'GT' or $call_base_father eq 'TG' ) {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									}
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									}
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao9; 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									}
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10;
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -4777,55 +6935,79 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'GT' or $call_base_father eq 'TG' ) 
                              elsif ($call_base_father eq 'TT') {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									}
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao9; 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao9; 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
                                      say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
-                                     say $fh_log $reg, $strMutacao13, $strMutacao14; 
+                                    say $fh_log $reg, $strMutacao13, $strMutacao14; 
                                  }
                              }#elsif ($call_base_father eq 'TT')    
                               elsif ($call_base_father eq '') {
@@ -4885,82 +7067,88 @@ while (my $fields = $csv->getline( $data )) {
                  
                  case ['GT','TG'] {if ($call_base_father eq 'AA') {          
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10;  
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;  
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12;
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12;
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
-                                         say $fh_log $reg, $strMutacao8,  $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8,  $strMutacao10; 
                                      }    
                                      elsif($call_base_offspring eq 'TC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }      
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
-                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
+                                        say $fh_log $reg, $strMutacao13, $strMutacao14; 
                                      }                 
                                  } #if $call_base_father 'AA'
                                  
                                  elsif ($call_base_father eq 'AC' or $call_base_father eq 'CA' ) {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;  
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao15;  
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;  
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao15;  
                                      }
                                      elsif($call_base_offspring eq 'CG') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -4975,69 +7163,87 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
-                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
+                                        say $fh_log $reg, $strMutacao13, $strMutacao14; 
                                      }
                                  }#elsif ($call_base_father eq 'AC' or 'CA')
                                  elsif ($call_base_father eq 'AG' or $call_base_father eq 'GA' ) {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9;
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;  
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10;  
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;  
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+										}  
                                      }
                                      elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao15;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao15;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+										}  
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }    
                                      elsif($call_base_offspring eq 'TC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                          say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -5046,52 +7252,70 @@ while (my $fields = $csv->getline( $data )) {
                                  
                                  elsif ($call_base_father eq 'AT' or $call_base_father eq 'TA' ) {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;  
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao15;  
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;  
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+										}  
                                      }
                                      elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao10;
+										} 
                                      }    
                                      elsif($call_base_offspring eq 'TC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao10;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                          say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -5099,82 +7323,106 @@ while (my $fields = $csv->getline( $data )) {
                                  }#elsif ($call_base_father eq 'AT' or 'TA')
                                  elsif ($call_base_father eq 'CC') {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+										}
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }    
                                      elsif($call_base_offspring eq 'TC') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao15; 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao15; 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao6, $strMutacao15; 
                                      } 
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
-                                         say $fh_log $reg, $strMutacao13, $strMutacao14; 
+                                        say $fh_log $reg, $strMutacao13, $strMutacao14; 
                                      }
                                  }#elsif ($call_base_father eq 'CC')
                                  
                                  elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' ) {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+										}
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
                                          say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -5183,10 +7431,10 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12;
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }    
                                      elsif($call_base_offspring eq 'TC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -5198,7 +7446,7 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                         say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                          say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -5206,46 +7454,64 @@ while (my $fields = $csv->getline( $data )) {
                                  }#elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' )  
                                  elsif ($call_base_father eq 'CT' or $call_base_father eq 'TC' ) {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+										}
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12;
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12;
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }    
                                      elsif($call_base_offspring eq 'TC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -5259,19 +7525,49 @@ while (my $fields = $csv->getline( $data )) {
                                  }#elsif ($call_base_father eq 'CT' or $call_base_father eq 'TC' )
                                  elsif ($call_base_father eq 'GG') {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao9;
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+										}
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+										}
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
                                          say $fh_log $reg, $strMutacao8, $strMutacao9; 
@@ -5280,31 +7576,49 @@ while (my $fields = $csv->getline( $data )) {
                                          say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+										}
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }    
                                      elsif($call_base_offspring eq 'TC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }    
                                      elsif($call_base_offspring eq 'TT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                          say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -5312,40 +7626,112 @@ while (my $fields = $csv->getline( $data )) {
                                  }#elsif ($call_base_father eq 'GG')   
                                  elsif ($call_base_father eq 'GT' or $call_base_father eq 'TG' ) {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+										}
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+										}
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+										}  
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9;
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+										}  
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+										}
                                      }    
                                      elsif($call_base_offspring eq 'TC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                       if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -5365,46 +7751,94 @@ while (my $fields = $csv->getline( $data )) {
                                  }#elsif ($call_base_father eq 'GT' or $call_base_father eq 'TG' ) 
                                  elsif ($call_base_father eq 'TT') {
                                      if ($call_base_offspring eq 'AA') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao9;
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+										}
                                      }
                                      elsif ($call_base_offspring eq 'AC') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+										}
                                      }
                                      elsif($call_base_offspring eq 'CA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'AG') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'GA') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'AT') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao15;
+										}
                                      }
                                      elsif($call_base_offspring eq 'TA') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao10;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'CC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao15;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao15;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'CG') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao15; 
                                      }
                                      elsif($call_base_offspring eq 'GC') {
-                                         say $fh_log $reg, $strMutacao6, $strMutacao9;
+                                        say $fh_log $reg, $strMutacao8, $strMutacao15;
                                      }   
                                      elsif($call_base_offspring eq 'CT') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao15;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+										} 
                                      }    
                                      elsif($call_base_offspring eq 'TC') {
-                                         say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                        if ($tx_confidence_father >  $tx_confidence_mother) {               
+											say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+										}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao8, $strMutacao15;
+										}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+											say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+										} 
                                      }
                                      elsif($call_base_offspring eq 'GG') {
-                                         say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                        say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                      }
                                      elsif($call_base_offspring eq 'TG') {
-                                         say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                        say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                      }                      
                                      elsif($call_base_offspring eq 'GT') {
                                          say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -5473,106 +7907,136 @@ while (my $fields = $csv->getline( $data )) {
                  
                  case 'TT' {if ($call_base_father eq 'AA') {          
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10;
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+									}  
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
-                                 }
-                                 elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
-                                 }
-                                 elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
-                                 }                      
-                                 elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
-                                 }    
-                                 elsif($call_base_offspring eq 'TT') {
                                      say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
+                                 elsif($call_base_offspring eq 'GG') {
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
+                                 }
+                                 elsif($call_base_offspring eq 'TG') {
+                                    say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                 }                      
+                                 elsif($call_base_offspring eq 'GT') {
+                                    say $fh_log $reg, $strMutacao8, $strMutacao9; 
+                                 }    
+                                 elsif($call_base_offspring eq 'TT') {
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                 }
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
-                                     say $fh_log $reg, $strMutacao13, $strMutacao14; 
+                                    say $fh_log $reg, $strMutacao13, $strMutacao14; 
                                  }                       
                              } #if $call_base_father 'AA'
                      
                              elsif ($call_base_father eq 'AC' or $call_base_father eq 'CA' ) {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10;
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12;
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12;
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                      say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -5580,43 +8044,49 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'AC' or 'CA')
                              elsif ($call_base_father eq 'AG' or $call_base_father eq 'GA' ) {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10;
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     ay $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12;
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12;
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12;
@@ -5625,7 +8095,7 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12;
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                      say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -5633,52 +8103,100 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'AG' or 'GA')
                              elsif ($call_base_father eq 'AT' or $call_base_father eq 'TA' ) {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10;
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12;
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12;
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+									}  
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									}  
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									} 
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									} 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                      say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -5686,52 +8204,70 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'AT' or 'TA')
                              elsif ($call_base_father eq 'CC') {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									} 
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									}   
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao15; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao9; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao9; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10;  
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao15; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                      say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -5739,52 +8275,58 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'CC')
                              elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' ) {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao9; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12;
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12;
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12;
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12;
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                      say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -5792,49 +8334,97 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'CG' or $call_base_father eq 'GC' )  
                              elsif ($call_base_father eq 'CT' or $call_base_father eq 'TC' ) {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									} 
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao9; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									}  
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10;
+									}  
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
@@ -5845,13 +8435,31 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'CT' or $call_base_father eq 'TC' )
                              elsif ($call_base_father eq 'GG') {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10, $strMutacao15;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
                                      say $fh_log $reg, $strMutacao7, $strMutacao10; 
@@ -5860,90 +8468,144 @@ while (my $fields = $csv->getline( $data )) {
                                      say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao8, $strMutacao9; 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                     say $fh_log $reg, $strMutacao8, $strMutacao9;
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                     say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12;
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12;
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12;
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12;
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao8, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
-                                     say $fh_log $reg, $strMutacao13, $strMutacao14; 
+                                    say $fh_log $reg, $strMutacao13, $strMutacao14; 
                                  }
                              }#elsif ($call_base_father eq 'GG')   
                              elsif ($call_base_father eq 'GT' or $call_base_father eq 'TG' ) {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao15; 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									}   
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao8, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao10, $strMutacao15;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao10, $strMutacao15;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao7, $strMutacao10; 
+                                    say $fh_log $reg, $strMutacao7, $strMutacao10; 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12;
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12;
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12;
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12;
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
-                                     say $fh_log $reg, $strMutacao11, $strMutacao12; 
+                                    say $fh_log $reg, $strMutacao11, $strMutacao12; 
                                  }
                                  elsif($call_base_offspring eq '' or $call_base_offspring eq 'NoCall') {
                                      say $fh_log $reg, $strMutacao13, $strMutacao14; 
@@ -5951,49 +8613,139 @@ while (my $fields = $csv->getline( $data )) {
                              }#elsif ($call_base_father eq 'GT' or $call_base_father eq 'TG' ) 
                              elsif ($call_base_father eq 'TT') {
                                  if ($call_base_offspring eq 'AA') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }
                                  elsif ($call_base_offspring eq 'AC') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+									}  
                                  }
                                  elsif($call_base_offspring eq 'CA') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'AG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'GA') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'AT') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'TA') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+									}
                                  }
                                  elsif($call_base_offspring eq 'CC') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao15; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'CG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'GC') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+									} 
                                  }   
                                  elsif($call_base_offspring eq 'CT') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao15; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+									} 
                                  }    
                                  elsif($call_base_offspring eq 'TC') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao15; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'GG') {
-                                     say $fh_log $reg, $strMutacao6, $strMutacao10; 
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao9, $strMutacao10;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao9, $strMutacao10;
+									} 
                                  }
                                  elsif($call_base_offspring eq 'TG') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+									}
                                  }                      
                                  elsif($call_base_offspring eq 'GT') {
-                                     say $fh_log $reg, $strMutacao5, $strMutacao10;
+                                    if ($tx_confidence_father >  $tx_confidence_mother) {               
+										say $fh_log $reg, $strMutacao7, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father <  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao8, $strMutacao15, $strMutacao9;
+									}elsif ($tx_confidence_father ==  $tx_confidence_mother) {
+										say $fh_log $reg, $strMutacao5, $strMutacao15, $strMutacao9;
+									}
                                  }    
                                  elsif($call_base_offspring eq 'TT') {
                                      say $fh_log $reg, $strMutacao11, $strMutacao12; 
