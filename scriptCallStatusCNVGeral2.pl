@@ -11,8 +11,8 @@ use Switch;
 use Class::Fields;
 
 #@utor: Hugo Leite
-#Versao: 4.0
-#Data: 14/11/2018
+#Versao: 4.5
+#Data: 28/12/2018
 #incluir todos os trios (grupo e controle)
 
 # my $filename = 'D:\hugo\doutoradoBiotecHugo\genotype_call_f15_teste.txt';
