@@ -610,11 +610,13 @@ while (my $fields = $csv->getline( $data )) {
                        say $fh_log $reg, $strDentroCNV;                                            
                 }elsif (($position >= '7719826') and ($position <= '7728428')){
                        say $fh_log $reg, $strDentroCNV;                                            
-                }elsif (($position >= '97782562') and ($position <= '97790470'))  {            #F22-2f
+                }elsif (($position >= '97782562') and ($position <= '97790470'))  {            #F22-2f e F22-4f
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '136221279') and ($position <= '136229870'))  {            
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '55417352') and ($position <= '55427518'))  {            #F22-3f
+                       say $fh_log $reg, $strDentroCNV;                     
+                }elsif (($position >= '102043630') and ($position <= '102044862'))  {            #F22-4f
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '32687328') and ($position <= '32689146'))  { #aqui comeca o grupo caso           
                        say $fh_log $reg, $strDentroCNV;                     
@@ -713,11 +715,15 @@ while (my $fields = $csv->getline( $data )) {
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '95008126') and ($position <= '95028171'))  {           #F22-2f 
                        say $fh_log $reg, $strDentroCNV;                     
-                }elsif (($position >= '116182809') and ($position <= '116188395'))  {            
+                }elsif (($position >= '116182809') and ($position <= '116188395'))  {        #F22-4f    
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '38294982') and ($position <= '38370792'))  {           #F22-3f 
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '146595819') and ($position <= '146600230'))  {            
+                       say $fh_log $reg, $strDentroCNV;                     
+                }elsif (($position >= '11619437') and ($position <= '11623727'))  {     #F22-4f      
+                       say $fh_log $reg, $strDentroCNV;                     
+                }elsif (($position >= '55270685') and ($position <= '55289763'))  {            
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '24753651') and ($position <= '24756098'))  {#comeca o grupo caso           
                        say $fh_log $reg, $strDentroCNV;                     
@@ -1015,6 +1021,8 @@ while (my $fields = $csv->getline( $data )) {
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '120976427') and ($position <= '120980176')){
                        say $fh_log $reg, $strDentroCNV;                                            
+                }elsif (($position >= '5054642') and ($position <= '5060651'))  {      #F22-4f      
+                       say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '103167191') and ($position <= '103168414'))  {#comeca o grupo caso           
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '5271581') and ($position <= '5277199'))  {            
@@ -1094,6 +1102,14 @@ while (my $fields = $csv->getline( $data )) {
                        say $fh_log $reg, $strDentroCNV;                                            
                 }elsif (($position >= '72996758') and ($position <= '73000019'))  {            
                        say $fh_log $reg, $strDentroCNV;                     
+                }elsif (($position >= '11219929') and ($position <= '11241366')){ #F22-4f
+                       say $fh_log $reg, $strDentroCNV;                                            
+                }elsif (($position >= '72996663') and ($position <= '73000019')){
+                       say $fh_log $reg, $strDentroCNV;                                            
+                }elsif (($position >= '93757418') and ($position <= '93772631')){
+                       say $fh_log $reg, $strDentroCNV;                                            
+                }elsif (($position >= '99795723') and ($position <= '99798721')){
+                       say $fh_log $reg, $strDentroCNV;                                            
                 }elsif (($position >= '121403946') and ($position <= '121407466'))  {  #comeca o grupo caso          
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '48724300') and ($position <= '48725402'))  {            
@@ -1155,6 +1171,8 @@ while (my $fields = $csv->getline( $data )) {
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '68223285') and ($position <= '68237242'))  {            
                        say $fh_log $reg, $strDentroCNV;                     
+                }elsif (($position >= '89991826') and ($position <= '90000514'))  {        #F22-4f    
+                       say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '78509880') and ($position <= '78523348'))  { #comeca o grupo caso           
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '20482870') and ($position <= '20485732'))  {            
@@ -1212,7 +1230,7 @@ while (my $fields = $csv->getline( $data )) {
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '88687170') and ($position <= '88691336'))  {            
                        say $fh_log $reg, $strDentroCNV;                     
-                }elsif (($position >= '74008368') and ($position <= '74024031'))  {            
+                }elsif (($position >= '74008368') and ($position <= '74024031'))  {    #F22-4f        
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '52650702') and ($position <= '52656324'))  {            
                        say $fh_log $reg, $strDentroCNV;                     
@@ -1234,12 +1252,14 @@ while (my $fields = $csv->getline( $data )) {
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '88398357') and ($position <= '88400301'))  {            
                        say $fh_log $reg, $strDentroCNV;                     
+                }elsif (($position >= '63953568') and ($position <= '63964068'))  {      #F22-3f      
+                       say $fh_log $reg, $strDentroCNV;                     
                 }else{
                        say $fh_log $reg, $strForaCNV;                     
                 }  
               }
               case '15' {
-                if(($position >= '27629288') and ($position <= '27630898'))  {            
+                if(($position >= '27629288') and ($position <= '27630898'))  {        #F22-4f    
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '67017221') and ($position <= '67034047'))  {            
                        say $fh_log $reg, $strDentroCNV;                     
@@ -1258,6 +1278,10 @@ while (my $fields = $csv->getline( $data )) {
                 }elsif (($position >= '28437169') and ($position <= '28439066'))  {            #F22-3f
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '99466715') and ($position <= '99467517')){
+                       say $fh_log $reg, $strDentroCNV;                                            
+                }elsif (($position >= '56706323') and ($position <= '56714563'))  {            #F22-4f
+                       say $fh_log $reg, $strDentroCNV;                     
+                }elsif (($position >= '90017473') and ($position <= '90031055')){
                        say $fh_log $reg, $strDentroCNV;                                            
                 }elsif (($position >= '23286571') and ($position <= '23290819'))  {  #comeca o grupo caso          
                        say $fh_log $reg, $strDentroCNV;                     
@@ -1347,6 +1371,10 @@ while (my $fields = $csv->getline( $data )) {
                        say $fh_log $reg, $strDentroCNV;                                            
                 }elsif (($position >= '62209842') and ($position <= '62215819')){ 
                        say $fh_log $reg, $strDentroCNV;                                            
+                }elsif (($position >= '3508') and ($position <= '4889'))  {  #F22-4f          
+                       say $fh_log $reg, $strDentroCNV;                     
+                }elsif (($position >= '39423000') and ($position <= '39432827')){
+                       say $fh_log $reg, $strDentroCNV;                                            
                 }elsif (($position >= '43754098') and ($position <= '43778410'))  { #comeca o grupo caso           
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '2399487') and ($position <= '2402229'))  {            
@@ -1394,7 +1422,7 @@ while (my $fields = $csv->getline( $data )) {
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '47017712') and ($position <= '47022214'))  {            
                        say $fh_log $reg, $strDentroCNV;                     
-                }elsif (($position >= '426371') and ($position <= '428469'))  { #F22-2f           
+                }elsif (($position >= '426371') and ($position <= '428469'))  { #F22-2f    e F22-4f       
                        say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '21257494') and ($position <= '21263400'))  { #F22-3f           
                        say $fh_log $reg, $strDentroCNV;                     
@@ -1495,6 +1523,10 @@ while (my $fields = $csv->getline( $data )) {
                        say $fh_log $reg, $strDentroCNV;                                            
                 }elsif (($position >= '36731195') and ($position <= '36732124')){ #F22-3F
                        say $fh_log $reg, $strDentroCNV;                                            
+                }elsif (($position >= '38209114') and ($position <= '38212001')){ #F22-4F
+                       say $fh_log $reg, $strDentroCNV;                                            
+                }elsif (($position >= '39669843') and ($position <= '39678926'))  {           
+                       say $fh_log $reg, $strDentroCNV;                     
                 }elsif (($position >= '46317932') and ($position <= '46320744'))  {  #comeca o grupo caso          
                        say $fh_log $reg, $strDentroCNV;                     
                 }else{
