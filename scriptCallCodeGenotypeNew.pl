@@ -11,36 +11,32 @@ use Switch;
 use Class::Fields;
 
 #@utor: Hugo Leite
-#Versao: 3.3
-#Data: 21/07/2017
-#Colocando dentro do GitHub
+#Versao: 5
+#Data: 05/01/2019
+#incluindo as familias: F06-2F, F07-4F, F22-2F, F22-3F, F22-4F
 
- my $filename = 'F:\doutorado\dados\resultadosBaseCall\BaseCallF09-3F.txt';
-#my $filename = 'D:\tr300872\Documents\Bckp 01-08-2014 disij70-trf1\D\Particular\doutorado\dados\output.strand.base.call.CMA025.txt';
+ my $filename = 'F:\doutorado\dados\resultadosBaseCall\BaseCallFAD-25F.csv';
+
  
 my $file = $filename or die "Need to get CSV file on the command line\n";
 
-#my $csv = Text::CSV_XS->new({
-#    sep_char => qq|\t|
-#});
- 
- my $csv = Text::CSV_XS->new ({ sep_char => "," });
+my $csv = Text::CSV_XS->new ({ sep_char => "," });
          $csv->sep_char (",");
  # my $c = $csv->sep_char;
  
  my @fields;
  
  my $probe_set_id = '';
- my $call_code_mother = '';
- my $tx_confidence_mother = '';
- my $vl_signal_A_mother = '';
- my $vl_signal_B_mother = '';
- my $call_base_mother = '';
  my $call_code_offspring = '';
  my $tx_confidence_offspring = '';
  my $vl_signal_A_offspring = '';
  my $vl_signal_B_offspring = '';
  my $call_base_offspring = '';
+ my $call_code_mother = '';
+ my $tx_confidence_mother = '';
+ my $vl_signal_A_mother = '';
+ my $vl_signal_B_mother = '';
+ my $call_base_mother = '';
  my $call_code_father = '';
  my $tx_confidence_father = '';
  my $vl_signal_A_father = '';
@@ -50,13 +46,13 @@ my $file = $filename or die "Need to get CSV file on the command line\n";
  my $position = '';
  my $chromosome_id = '';
  my $origem_mutacao = '';
- my $tipo_mutacao = '';
+ my $tipo_mutacao1 = '';
+ my $tipo_mutacao2= '';
+ my $tipo_mutacao3= '';
      
 open(my $data, '<:encoding(utf8)', $file) or die "Could not open '$file' $!\n";
      
- open(my $fh_log, '>>', 'F:\doutorado\dados\resultadoCodeGenotype\resultadoGenotypeCallF09-3F.txt');
-#open(my $fh_log, '>>', 'D:\tr300872\Documents\Bckp 01-08-2014 disij70-trf1\D\Particular\doutorado\dados\output.genotype.code.base.CMA025.txt');
-
+ open(my $fh_log, '>>', 'F:\doutorado\dados\resultadoCodeGenotype\resultadoGenotypeCallFAD-25F.csv');
  
 while (my $fields = $csv->getline( $data )) {
   
@@ -84,7 +80,9 @@ while (my $fields = $csv->getline( $data )) {
   $chromosome_id            = $fields->[17];
   $position                 = $fields->[18];
   $origem_mutacao           = $fields->[19];
-  $tipo_mutacao             = $fields->[20]; 
+  $tipo_mutacao1             = $fields->[20]; 
+  $tipo_mutacao2             = $fields->[21]; 
+  $tipo_mutacao3            = $fields->[22]; 
   
   @fields = ($probe_set_id,$call_code_father,$tx_confidence_father,
                    $vl_signal_A_father,$vl_signal_B_father,$call_base_father,                   
@@ -92,7 +90,8 @@ while (my $fields = $csv->getline( $data )) {
                    $vl_signal_A_mother,$vl_signal_B_mother,$call_base_mother,
                    $call_code_offspring,$tx_confidence_offspring,
                    $vl_signal_A_offspring,$vl_signal_B_offspring,$call_base_offspring,                   
-                   $dbSNP,$chromosome_id,$position,$origem_mutacao, $tipo_mutacao
+                   $dbSNP,$chromosome_id,$position,$origem_mutacao, 
+                   $tipo_mutacao1,$tipo_mutacao2,$tipo_mutacao3
                );
   
  
@@ -104,11 +103,11 @@ while (my $fields = $csv->getline( $data )) {
   #&verificaGenotipo();
   #&verificaBaseNitrogenada();
   
-  my $strMutacao1 = ",Mutacao Genotipica - Origem Materna ou Paterna,F09-3F,";
-  my $strMutacao3 = ",Mutacao Genotipica - Origem Materna,F09-3F,";
-  my $strMutacao4 = ",Mutacao Genotipica - Origem Paterna,F09-3F,";
-  my $strMutacao5 = ",Sem Mutacao Genotipica,F09-3F,";  
-  my $strMutacao6 = ",Inconclusivo,F09-3F,";  
+  my $strMutacao1 = ",Mutacao Genotipica - Origem Materna ou Paterna,FAD-25F,";
+  my $strMutacao3 = ",Mutacao Genotipica - Origem Materna,FAD-25F,";
+  my $strMutacao4 = ",Mutacao Genotipica - Origem Paterna,FAD-25F,";
+  my $strMutacao5 = ",Sem Mutacao Genotipica,FAD-25F,";  
+  my $strMutacao6 = ",Inconclusivo,FAD-25F,";  
   
   
   # print ($call_code_mother);
