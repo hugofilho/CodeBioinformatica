@@ -12,11 +12,11 @@ use Switch;
 use Class::Fields;
 
 #@utor: Hugo Leite
-#Versao: 8
-#Data: 29/08/2017
-#Adaptando o código para identificar mutações em nucleotideos
+#Versao: 9
+#Data: 05/01/2019
+#incluindo as familias: F06-2F, F07-4F, F22-2F, F22-3F, F22-4F
 
-my $filename = 'F:\doutorado\dados\GenotypeCall-FAD-25F.txt';
+my $filename = 'F:\doutorado\dados\Genotype Call - F22-4F.txt';
 
 my $file = $filename or die "Need to get CSV file on the command line\n";
 
@@ -49,7 +49,7 @@ my $csv = Text::CSV_XS->new({
      
 open(my $data, '<:encoding(utf8)', $file) or die "Could not open '$file' $!\n";
      
-open(my $fh_log, '>>', 'F:\doutorado\dados\resultadosBaseCall\BaseCallFAD-25F.csv');
+open(my $fh_log, '>>', 'F:\doutorado\dados\resultadosBaseCall\BaseCallF22-4F.csv');
 #open(my $fh_log, '>>', 'D:\hugo\doutoradoBiotecHugo\output.strand.base.call.teste.txt');
  
 while (my $fields = $csv->getline( $data )) {
@@ -58,25 +58,25 @@ while (my $fields = $csv->getline( $data )) {
   $fields =~ s/\s*#.*$//;
   
   # Para a familia F09A.txt temos as seguintes posicoes de cabecalho: Possui 3 Filhos  
-  #$probe_set_id             = $fields->[0];        
-  #$call_code_mother         = $fields->[1];
-  #$tx_confidence_mother     = $fields->[2];
-  #$vl_signal_A_mother       = $fields->[3];
-  #$vl_signal_B_mother       = $fields->[4];
-  #$call_base_mother         = $fields->[5];  
-  #$call_code_offspring      = $fields->[16];
-  #$tx_confidence_offspring  = $fields->[17];
-  #$vl_signal_A_offspring    = $fields->[18];
-  #$vl_signal_B_offspring    = $fields->[19];
-  #$call_base_offspring      = $fields->[20];
-  #$call_code_father         = $fields->[21];
-  #$tx_confidence_father     = $fields->[22];
-  #$vl_signal_A_father       = $fields->[23];
-  #$vl_signal_B_father       = $fields->[24];
-  #$call_base_father         = $fields->[25];  
-  #$dbSNP                    = $fields->[26];
-  #$chromosome_id            = $fields->[27];
-  #$position                 = $fields->[28];
+  $probe_set_id             = $fields->[0];        
+  $call_code_mother         = $fields->[1];
+  $tx_confidence_mother     = $fields->[2];
+  $vl_signal_A_mother       = $fields->[3];
+  $vl_signal_B_mother       = $fields->[4];
+  $call_base_mother         = $fields->[5];  
+  $call_code_offspring      = $fields->[6];
+  $tx_confidence_offspring  = $fields->[7];
+  $vl_signal_A_offspring    = $fields->[8];
+  $vl_signal_B_offspring    = $fields->[9];
+  $call_base_offspring      = $fields->[10];
+  $call_code_father         = $fields->[11];
+  $tx_confidence_father     = $fields->[12];
+  $vl_signal_A_father       = $fields->[13];
+  $vl_signal_B_father       = $fields->[14];
+  $call_base_father         = $fields->[15];  
+  $dbSNP                    = $fields->[16];
+  $chromosome_id            = $fields->[17];
+  $position                 = $fields->[18];
   
   #Para a familia F09A.txt temos as seguintes posicoes de cabecalho: Possui 2 Filhos  
   #$probe_set_id             = $fields->[0];        
@@ -121,25 +121,25 @@ while (my $fields = $csv->getline( $data )) {
   #$position                 = $fields->[18];
   
   #Para a familia controle CMA005.txt temos as seguintes posicoes de cabecalho
-  $probe_set_id             = $fields->[0];  
-  $call_code_father         = $fields->[1];
-  $tx_confidence_father     = $fields->[2];
-  $vl_signal_A_father       = $fields->[3];
-  $vl_signal_B_father       = $fields->[4];
-  $call_base_father         = $fields->[5];
-  $call_code_mother         = $fields->[6];
-  $tx_confidence_mother     = $fields->[7];
-  $vl_signal_A_mother       = $fields->[8];
-  $vl_signal_B_mother       = $fields->[9];
-  $call_base_mother         = $fields->[10]; 
-  $call_code_offspring      = $fields->[11];
-  $tx_confidence_offspring  = $fields->[12];
-  $vl_signal_A_offspring    = $fields->[13];
-  $vl_signal_B_offspring    = $fields->[14];
-  $call_base_offspring      = $fields->[15];       
-  $dbSNP                    = $fields->[16];
-  $chromosome_id            = $fields->[17];
-  $position                 = $fields->[18];  
+  #$probe_set_id             = $fields->[0];  
+  #$call_code_father         = $fields->[1];
+  #$tx_confidence_father     = $fields->[2];
+  #$vl_signal_A_father       = $fields->[3];
+  #$vl_signal_B_father       = $fields->[4];
+  #$call_base_father         = $fields->[5];
+  #$call_code_mother         = $fields->[6];
+  #$tx_confidence_mother     = $fields->[7];
+  #$vl_signal_A_mother       = $fields->[8];
+  #$vl_signal_B_mother       = $fields->[9];
+  #$call_base_mother         = $fields->[10]; 
+  #$call_code_offspring      = $fields->[11];
+  #$tx_confidence_offspring  = $fields->[12];
+  #$vl_signal_A_offspring    = $fields->[13];
+  #$vl_signal_B_offspring    = $fields->[14];
+  #$call_base_offspring      = $fields->[15];       
+  #$dbSNP                    = $fields->[16];
+  #$chromosome_id            = $fields->[17];
+  #$position                 = $fields->[18];  
   
 #Para a familia F09-2F.txt [6-10] temos as seguintes posicoes de cabecalho: Possui 2 Filhos  
 #Para a familia F09-3F.txt [11-15] temos as seguintes posicoes de cabecalho: Possui 2 Filhos 
