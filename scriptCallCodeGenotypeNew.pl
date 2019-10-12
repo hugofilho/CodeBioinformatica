@@ -11,11 +11,12 @@ use Switch;
 use Class::Fields;
 
 #@utor: Hugo Leite
-#Versao: 5
-#Data: 05/01/2019
-#incluindo as familias: F06-2F, F07-4F, F22-2F, F22-3F, F22-4F
+#Versao: 8
+#Data: 11/10/2019
+#incluindo as familias: CMA027, CMA039, CMA040, CMA045, CMA051, CMA052
+#                                     CMA053, CMA060, CMA065, CMA066, CMA068, CMA070, CMA072, CMA067
 
- my $filename = 'F:\doutorado\dados\resultadosBaseCall\BaseCallFAD-25F.csv';
+ my $filename = 'F:\doutorado\dados\resultadosBaseCall\BaseCallCMA065-1F.csv';
 
  
 my $file = $filename or die "Need to get CSV file on the command line\n";
@@ -52,7 +53,7 @@ my $csv = Text::CSV_XS->new ({ sep_char => "," });
      
 open(my $data, '<:encoding(utf8)', $file) or die "Could not open '$file' $!\n";
      
- open(my $fh_log, '>>', 'F:\doutorado\dados\resultadoCodeGenotype\resultadoGenotypeCallFAD-25F.csv');
+ open(my $fh_log, '>>', 'F:\doutorado\dados\resultadoCodeGenotype\resultadoGenotypeCallCMA065-1F.csv');
  
 while (my $fields = $csv->getline( $data )) {
   
@@ -103,11 +104,11 @@ while (my $fields = $csv->getline( $data )) {
   #&verificaGenotipo();
   #&verificaBaseNitrogenada();
   
-  my $strMutacao1 = ",Mutacao Genotipica - Origem Materna ou Paterna,FAD-25F,";
-  my $strMutacao3 = ",Mutacao Genotipica - Origem Materna,FAD-25F,";
-  my $strMutacao4 = ",Mutacao Genotipica - Origem Paterna,FAD-25F,";
-  my $strMutacao5 = ",Sem Mutacao Genotipica,FAD-25F,";  
-  my $strMutacao6 = ",Inconclusivo,FAD-25F,";  
+  my $strMutacao1 = ",Mutacao Genotipica - Origem Materna ou Paterna,CMA065-1F,";
+  my $strMutacao3 = ",Mutacao Genotipica - Origem Materna,CMA065-1F,";
+  my $strMutacao4 = ",Mutacao Genotipica - Origem Paterna,CMA065-1F,";
+  my $strMutacao5 = ",Sem Mutacao Genotipica,CMA065-1F,";  
+  my $strMutacao6 = ",Inconclusivo,CMA065-1F,";  
   
   
   # print ($call_code_mother);
@@ -426,6 +427,18 @@ while (my $fields = $csv->getline( $data )) {
     #    }# if $call_base
     # }# if $call_code      
  # }# if $tx_confidence
+ # print($strMutacao1);
+ #         my $buffer;
+ #         $buffer='';
+ #         my $lines;
+ #         $lines = 0;
+          
+          #if ($strMutacao1 eq ',Mutacao Genotipica - Origem Materna ou Paterna,CMA051-1F,') {
+ #                   while (sysread $data, $buffer, 4096) {
+ #                           $lines += ($buffer =~ tr/\n//);
+ #                           print($lines);
+ #                   }
+            #}
     
 }   #While
   

@@ -11,11 +11,12 @@ use Switch;
 use Class::Fields;
 
 #@utor: Hugo Leite
-#Versao: 5
-#Data: 05/01/2019
-#incluir todos os trios (grupo e controle)
+#Versao: 6
+#Data: 11/10/2019
+#incluindo as familias: CMA027, CMA039, CMA040, CMA045, CMA051, CMA052
+#                                     CMA053, CMA060, CMA065, CMA066, CMA068, CMA070, CMA072, CMA067
 
-my $filename = 'F:\doutorado\dados\resultadoCodeGenotype\resultadoGenotypeCallCMA025-1F.csv';
+my $filename = 'F:\doutorado\dados\resultadoCodeGenotype\resultadoGenotypeCallCMA065-1F.csv';
  
 my $file = $filename or die "Need to get CSV file on the command line\n";
 
@@ -57,7 +58,7 @@ my $file = $filename or die "Need to get CSV file on the command line\n";
      
 open(my $data, '<:encoding(utf8)', $file) or die "Could not open '$file' $!\n";
      
-open(my $fh_log, '>>', 'F:\doutorado\dados\resultadosStatusCNV\statusGeralCMA025-1F.csv');
+open(my $fh_log, '>>', 'F:\doutorado\dados\resultadosStatusCNV\statusGeralCMA065-1F.csv');
 
  
 while (my $fields = $csv->getline( $data )) {
